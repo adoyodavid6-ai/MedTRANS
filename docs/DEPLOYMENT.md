@@ -30,7 +30,21 @@ Then create the first administrator (see README → Bootstrapping).
 - Phone sign-in enabled (Twilio) by the project owner. Next: deploy the app, sign in once, then bootstrap the first administrator (README).
 
 ## Deploying on Vercel
-`vercel.json` pins functions to Dublin (`dub1`, next to the database in eu-west-1) and runs the notification job every minute. Per-minute cron schedules need a Vercel Pro plan; on Hobby, change the schedule to daily or use an external scheduler that sends `Authorization: Bearer $CRON_SECRET`.
+`vercel.json` pins functions to Dublin (`dub1`, next to the database in eu-west-1) and runs the notification job once a day at 08:00 Nairobi time, the most the Vercel Hobby plan allows.
+
+That is enough while no SMS or email provider is configured: in-app notifications are written straight to the database and never wait for this job. **Before you switch SMS/email on**, make delivery run every minute in one of these ways:
+- Vercel Pro: change the schedule in `vercel.json` to `* * * * *`.
+- Free: let Supabase call the job. In the SQL editor, enable `pg_net`, store the secret in Vault, and schedule it:
+  ```sql
+  create extension if not exists pg_net with schema extensions;
+  select vault.create_secret('<your CRON_SECRET>', 'cron_secret');
+  select cron.schedule('medtrans-deliver-notifications', '* * * * *', $$
+    select net.http_post(
+      url := 'https://<your-domain>/api/jobs/deliver-notifications',
+      headers := jsonb_build_object('Authorization', 'Bearer ' || (select decrypted_secret from vault.decrypted_secrets where name = 'cron_secret'))
+    );
+  $$);
+  ```
 
 Environment variables (Production):
 
