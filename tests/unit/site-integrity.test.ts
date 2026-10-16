@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { FOOTER_NAV, MAIN_NAV, PUBLIC_ROUTES, type PublicRoute } from "@/lib/site/routes";
+import { FOOTER_NAV, MAIN_NAV, NAV_GROUPS, PUBLIC_ROUTES, UTILITY_NAV, type PublicRoute } from "@/lib/site/routes";
 
 const ROUTES: readonly PublicRoute[] = PUBLIC_ROUTES;
 
@@ -33,7 +33,7 @@ describe("route registry (§21: every nav item reaches a page)", () => {
 
   it("nav only links to registered routes", () => {
     const known = new Set<string>(PUBLIC_ROUTES.map((r) => r.href));
-    for (const item of [...MAIN_NAV, ...FOOTER_NAV.flatMap((g) => g.links)]) expect(known.has(item.href)).toBe(true);
+    for (const item of [...MAIN_NAV, ...UTILITY_NAV, ...NAV_GROUPS.flatMap((g) => g.links), ...FOOTER_NAV.flatMap((g) => g.links)]) expect(known.has(item.href)).toBe(true);
   });
 });
 

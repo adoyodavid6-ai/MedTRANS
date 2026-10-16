@@ -70,6 +70,67 @@ export const MAIN_NAV: { href: PublicHref; label: string }[] = [
   { href: "/help", label: "Help Centre" },
 ];
 
+/** Header menu bar: grouped dropdowns (desktop) and grouped sections (mobile menu). */
+export const NAV_GROUPS: { label: string; links: { href: PublicHref; label: string }[] }[] = [
+  {
+    label: "Pharmacy",
+    links: [
+      { href: "/pharmacy", label: "MedTRANS Pharmacy" },
+      { href: "/pharmacy/medicines", label: "Find a medicine" },
+      { href: "/pharmacies", label: "Find a pharmacy" },
+      { href: "/orders/track", label: "Track an order" },
+      { href: "/cart", label: "Your cart" },
+    ],
+  },
+  {
+    label: "DoctorCare",
+    links: [
+      { href: "/doctorcare", label: "DoctorCare" },
+      { href: "/doctorcare/services", label: "Home-care services" },
+      { href: "/find-a-doctor", label: "Find a doctor" },
+      { href: "/doctorcare/book", label: "Request a home visit" },
+      { href: "/smartcare/map", label: "SmartCare map" },
+    ],
+  },
+  {
+    label: "Safety",
+    links: [
+      { href: "/emergency", label: "Emergency Help" },
+      { href: "/coverage", label: "Check coverage" },
+    ],
+  },
+  {
+    label: "Resources",
+    links: [
+      { href: "/resources", label: "Health resources" },
+      { href: "/how-it-works", label: "How it works" },
+      { href: "/help", label: "Help Centre" },
+    ],
+  },
+  {
+    label: "Partners",
+    links: [
+      { href: "/join/provider", label: "Join as a doctor or nurse" },
+      { href: "/join/pharmacy", label: "Register your pharmacy" },
+      { href: "/partnerships", label: "Partnerships" },
+    ],
+  },
+  {
+    label: "About",
+    links: [
+      { href: "/about", label: "About MedTRANS" },
+      { href: "/contact", label: "Contact us" },
+    ],
+  },
+];
+
+/** Small links in the header's top bar. */
+export const UTILITY_NAV: { href: PublicHref; label: string }[] = [
+  { href: "/help", label: "Help Centre" },
+  { href: "/contact", label: "Contact" },
+  { href: "/partnerships", label: "Partners" },
+];
+
 export const FOOTER_NAV: { heading: string; links: { href: PublicHref; label: string }[] }[] = [
   {
     heading: "Care",
