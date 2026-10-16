@@ -27,7 +27,24 @@ Then create the first administrator (see README → Bootstrapping).
 
 ## Status of the hosted project (`bsiyaddxphdsenwqybro`, eu-west-1)
 - 16 Oct 2026: all 16 migrations applied through `scripts/apply-hosted-migrations.py` and recorded in `supabase_migrations.schema_migrations`. Checked afterwards: 52 public tables, all with RLS; every SECURITY DEFINER function pins `search_path`; pg_cron jobs `medtrans-expire-unpaid-orders` and `medtrans-expire-booking-offers` scheduled; private `prescriptions` bucket; Kenya and Somalia inactive; emergency callback off; no users, no seed data.
-- Still to do in the dashboard: enable the **Phone** provider with a real SMS provider, then bootstrap the first administrator (README).
+- Phone sign-in enabled (Twilio) by the project owner. Next: deploy the app, sign in once, then bootstrap the first administrator (README).
+
+## Deploying on Vercel
+`vercel.json` pins functions to Dublin (`dub1`, next to the database in eu-west-1) and runs the notification job every minute. Per-minute cron schedules need a Vercel Pro plan; on Hobby, change the schedule to daily or use an external scheduler that sends `Authorization: Bearer $CRON_SECRET`.
+
+Environment variables (Production):
+
+| Variable | Value |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | `https://bsiyaddxphdsenwqybro.supabase.co` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | the publishable key (Settings → API) |
+| `SUPABASE_SERVICE_ROLE_KEY` | the secret key (Settings → API); server only |
+| `NEXT_PUBLIC_SITE_URL` | your real https domain |
+| `CRON_SECRET` | a long random string |
+
+Leave `PAYMENTS_TEST_MODE` unset. Optional: `MPESA_*`, `AFRICASTALKING_*`, `EMAIL_*`, `ERROR_REPORT_URL`.
+
+Then, in Supabase → Authentication → URL Configuration, set the Site URL to the same domain.
 
 ## Without a direct database connection
 Some environments (like the cloud session used to build this) can reach `api.supabase.com` over HTTPS but cannot open a Postgres connection, so `supabase db push` fails. `scripts/apply-hosted-migrations.py` applies the same migrations through the Management API, one transaction per migration, and records each in `supabase_migrations.schema_migrations` so the CLI stays in sync:
