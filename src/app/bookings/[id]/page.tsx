@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { AutoRefresh } from "@/app/orders/[id]/auto-refresh";
 import { PaymentPanel } from "@/components/payments/payment-panel";
 import { TestPaymentControls } from "@/components/payments/test-payment-controls";
+import { ReportIncident } from "@/components/safety/report-incident";
 import { Alert } from "@/components/ui/alert";
 import { Badge, VerificationBadge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -142,6 +143,7 @@ export default async function BookingPage({ params }: { params: Promise<{ id: st
       ) : null}
 
       {["awaiting_acceptance", "awaiting_payment", "confirmed"].includes(b.status) ? <CancelBooking bookingId={b.id} paid={paid} /> : null}
+      {b.provider_id ? <ReportIncident bookingId={b.id} title="Report a problem with this visit" /> : null}
     </div>
   );
 }

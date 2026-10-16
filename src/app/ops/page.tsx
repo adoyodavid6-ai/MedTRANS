@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Alert } from "@/components/ui/alert";
 import { Card } from "@/components/ui/card";
 import { ROLE_LABELS, isRole } from "@/lib/auth/roles";
@@ -19,8 +20,8 @@ export default async function OpsOverview() {
   const user = await requireAccount("/ops", ["admin", "support"]);
   if (!user.roles.includes("admin")) {
     return (
-      <Alert tone="info" title="Support tools are not active yet">
-        <p>Tickets, inquiries and incident handling open in build phase 4.</p>
+      <Alert tone="info" title="Support">
+        <p><Link href="/ops/support" className="font-semibold underline">Open the support ticket queue</Link>.</p>
       </Alert>
     );
   }

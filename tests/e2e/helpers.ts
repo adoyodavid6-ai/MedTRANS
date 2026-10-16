@@ -8,6 +8,7 @@ export const PHONES = {
   doctor: "0700000002",
   nurse: "0700000003",
   courier: "0700000006",
+  responder: "0700000009",
   support: "0700000007",
   admin: "0700000008",
 } as const;

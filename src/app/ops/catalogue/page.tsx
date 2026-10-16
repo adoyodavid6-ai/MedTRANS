@@ -4,11 +4,12 @@ import { Card } from "@/components/ui/card";
 import { requireAccount } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { ProductForm } from "../pharmacy-forms";
+import { RecallForm } from "../support-forms";
 
 export default async function Catalogue() {
   await requireAccount("/ops/catalogue", ["admin"]);
   const supabase = await createClient();
-  const { data } = await supabase.from("medicine_products").select("id, name, strength, dosage_form, pack_size, requires_prescription, is_controlled, vat_rate_bps, approved_info").order("name");
+  const { data } = await supabase.from("medicine_products").select("id, name, strength, dosage_form, pack_size, requires_prescription, is_controlled, vat_rate_bps, approved_info, recalled_at, recall_note").order("name");
   return (
     <>
       <Card>
@@ -21,6 +22,7 @@ export default async function Catalogue() {
                 <RxBadge rx={m.requires_prescription} controlled={m.is_controlled} />
                 {m.vat_rate_bps === null ? <Badge tone="warning">VAT not set</Badge> : <Badge>VAT {m.vat_rate_bps / 100}%</Badge>}
                 {m.approved_info ? <Badge tone="success">Approved info</Badge> : <Badge>No approved info</Badge>}
+                {m.recalled_at ? <Badge tone="urgent">Recalled</Badge> : <RecallForm productId={m.id} />}
               </span>
             </li>
           ))}

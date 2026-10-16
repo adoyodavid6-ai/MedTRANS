@@ -14,7 +14,7 @@ import { createAnonClient } from "@/lib/supabase/server";
 
 type Product = {
   id: string; slug: string; name: string; generic_name: string; brand: string | null; strength: string; dosage_form: string; pack_size: string;
-  manufacturer: string | null; requires_prescription: boolean; is_controlled: boolean; approved_info: string | null; approved_info_source: string | null;
+  manufacturer: string | null; requires_prescription: boolean; is_controlled: boolean; approved_info: string | null; approved_info_source: string | null; recalled_at: string | null; recall_note: string | null;
 };
 type Offer = {
   inventory_id: string; pharmacy_id: string; pharmacy_name: string; pharmacy_slug: string; verification_status: "verified" | "pending" | "suspended" | "unverified";
@@ -25,7 +25,7 @@ async function load(slug: string) {
   const db = createAnonClient();
   const { data: product } = await db
     .from("medicine_products")
-    .select("id, slug, name, generic_name, brand, strength, dosage_form, pack_size, manufacturer, requires_prescription, is_controlled, approved_info, approved_info_source")
+    .select("id, slug, name, generic_name, brand, strength, dosage_form, pack_size, manufacturer, requires_prescription, is_controlled, approved_info, approved_info_source, recalled_at, recall_note")
     .eq("slug", slug).maybeSingle();
   if (!product) return null;
   const { data: offers } = await db.rpc("product_offers", { p_product: product.id });
@@ -74,6 +74,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {m.requires_prescription && !m.is_controlled ? (
         <Alert tone="info" title="Prescription needed" className="mt-6">
           <p>After adding this to your cart, upload your prescription. A licensed pharmacist reviews it before you pay. Don&apos;t use this medicine as a substitute for professional advice.</p>
+        </Alert>
+      ) : null}
+      {m.recalled_at ? (
+        <Alert tone="urgent" title="This medicine has been recalled" className="mt-6">
+          <p>{m.recall_note} It is not available to order. If you have this medicine, stop using it and speak to a pharmacist, or report a problem from your order page.</p>
         </Alert>
       ) : null}
       {m.is_controlled ? (

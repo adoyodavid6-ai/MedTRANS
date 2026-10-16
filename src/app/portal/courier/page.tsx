@@ -1,5 +1,6 @@
 import { Bike } from "lucide-react";
 import { AreaShell } from "@/components/account/area-shell";
+import { ReportIncident } from "@/components/safety/report-incident";
 import { Alert } from "@/components/ui/alert";
 import { Badge, VerificationBadge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -58,6 +59,7 @@ export default async function CourierPortal() {
           </div>
           {j.handover_locked ? <Alert tone="urgent" title="Handover locked after too many wrong codes"><p>Contact MedTRANS operations.</p></Alert> : null}
           <AssignmentActions orderId={j.order_id} status={j.status} locked={j.handover_locked} />
+          <ReportIncident orderId={j.order_id} title="Report an incident on this delivery" />
         </Card>
       ))}
     </AreaShell>

@@ -40,3 +40,14 @@ export async function getVerifiedEmergencyContacts(countryCode: string): Promise
 export function telHref(phone: string) {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }
+
+/** True only while an admin has recorded a staffed operation and at least one responder exists. */
+export async function isEmergencyOperationStaffed(): Promise<boolean> {
+  if (!isSupabaseConfigured()) return false;
+  try {
+    const { data } = await createAnonClient().rpc("emergency_operation_staffed");
+    return data === true;
+  } catch {
+    return false;
+  }
+}

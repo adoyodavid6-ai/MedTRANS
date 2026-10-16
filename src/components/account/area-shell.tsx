@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import { LogOut } from "lucide-react";
+import { Bell, LogOut } from "lucide-react";
+import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/sign-in/actions";
 import { Badge } from "@/components/ui/badge";
 import { ROLE_LABELS, portalsFor, type Role } from "@/lib/auth/roles";
@@ -7,7 +8,7 @@ import { SideNav, type SideNavItem } from "./side-nav";
 import Link from "next/link";
 
 /** Layout for signed-in areas: title, role badges, portal switcher, section nav, sign out. */
-export function AreaShell({
+export async function AreaShell({
   title,
   roles,
   nav,
@@ -19,6 +20,8 @@ export function AreaShell({
   children: ReactNode;
 }) {
   const portals = portalsFor(roles);
+  const supabase = await createClient();
+  const { count: unread } = await supabase.from("notifications").select("id", { count: "exact", head: true }).is("read_at", null);
   return (
     <div className="container-page py-8 sm:py-10">
       <div className="flex flex-wrap items-start justify-between gap-4">
@@ -33,6 +36,11 @@ export function AreaShell({
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <Link href="/account/notifications" className="relative inline-flex size-11 items-center justify-center rounded-xl border border-line bg-surface text-navy hover:border-primary">
+            <Bell aria-hidden className="size-5" />
+            <span className="sr-only">Notifications{unread ? `, ${unread} unread` : ""}</span>
+            {unread ? <span aria-hidden className="absolute -top-1 -right-1 rounded-full bg-urgent px-1.5 text-xs font-bold text-white">{unread > 99 ? "99+" : unread}</span> : null}
+          </Link>
           {portals.length > 1 ? (
             <nav aria-label="Switch area" className="flex flex-wrap gap-1">
               {portals.map((p) => (

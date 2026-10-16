@@ -54,3 +54,8 @@ export function timeAgo(iso: string, now = Date.now()) {
 export function suggestedValidUntil(days = 30) {
   return new Date(Date.now() + days * 864e5).toISOString().slice(0, 10);
 }
+
+/** ISO timestamp `days` ago, for "last N days" queries. */
+export function daysAgoIso(days: number) {
+  return new Date(Date.now() - days * 864e5).toISOString();
+}

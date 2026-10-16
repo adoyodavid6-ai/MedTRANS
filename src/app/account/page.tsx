@@ -1,15 +1,7 @@
 import Link from "next/link";
-import { Receipt, Bell, LifeBuoy } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { EmptyState } from "@/components/ui/empty-state";
 import { requireAccount } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
-
-const UPCOMING = [
-  { icon: Receipt, title: "Payments", body: "Receipts and refund status will appear here." },
-  { icon: Bell, title: "Notifications", body: "Updates about your orders and visits will appear here." },
-  { icon: LifeBuoy, title: "Support", body: "Your support requests and replies will appear here." },
-];
 
 export default async function AccountOverview() {
   const user = await requireAccount("/account");
@@ -38,16 +30,17 @@ export default async function AccountOverview() {
           </div>
         </dl>
       </Card>
-      <section aria-labelledby="upcoming-heading" className="space-y-3">
-        <h2 id="upcoming-heading" className="text-lg font-semibold">Coming as services open</h2>
-        <div className="grid gap-3 md:grid-cols-2">
-          {UPCOMING.map((u) => (
-            <EmptyState key={u.title} icon={u.icon} title={u.title}>
-              {u.body}
-            </EmptyState>
-          ))}
-        </div>
-      </section>
+      <nav aria-label="Quick links" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {[
+          { href: "/account/orders", label: "Medicine orders" },
+          { href: "/account/bookings", label: "Home visits" },
+          { href: "/account/prescriptions", label: "Prescriptions" },
+          { href: "/account/support", label: "Support" },
+        ].map((l) => (
+          <Link key={l.href} href={l.href} className="flex min-h-14 items-center rounded-[var(--radius-card)] border border-line bg-surface px-4 font-semibold text-navy hover:border-primary">{l.label}</Link>
+        ))}
+      </nav>
+      <p className="text-sm text-muted">Payment receipts and refund status are shown on each order and home visit.</p>
     </>
   );
 }

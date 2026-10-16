@@ -74,6 +74,14 @@ Nothing below is guessed in code. Each value appears in the app as an explicit t
 - [ ] `[[CONFIRM: Pesapal / Paystack needed at launch?]]` → `[[ENV: PESAPAL_*]]` / `[[ENV: PAYSTACK_SECRET_KEY]]`
 - [ ] `[[CONFIRM: commission rates, settlement schedule, refund policy]]`
 
+## Safety, support & notifications: built in Phase 4
+- [ ] `[[CONFIRM: staffed emergency operation]]`: the callback-request feature stays off until an admin records staffed hours and a named supervisor (Operations → Emergency operation) and at least one trained responder has the role
+- [ ] `[[CONFIRM: emergency escalation and outage procedures]]` and responder training records (outside the app)
+- [ ] `[[ENV: CRON_SECRET]]` and a scheduler (e.g. Vercel Cron) calling `POST /api/jobs/deliver-notifications` every minute
+- [ ] SMS via Africa's Talking: `[[ENV: AFRICASTALKING_API_KEY]]`, `[[ENV: AFRICASTALKING_USERNAME]]`, `[[ENV: SMS_SENDER_ID]]`. **Adapter written, not yet tested against a live account.** Until set, SMS are recorded as "skipped".
+- [ ] Email: `[[ENV: EMAIL_API_URL]]`, `[[ENV: EMAIL_API_KEY]]`, `[[ENV: EMAIL_FROM]]` (any HTTPS email API taking from/to/subject/text). Not yet tested.
+- [ ] `[[CONFIRM: support hours and response targets]]`
+
 ## Notifications
 - [ ] `[[CONFIRM: SMS provider — e.g. Africa's Talking]]` → `[[ENV: SMS_API_KEY]]`, `[[ENV: SMS_SENDER_ID]]`
 - [ ] `[[CONFIRM: email provider]]` → `[[ENV: EMAIL_API_KEY]]`, `[[ENV: EMAIL_FROM]]`

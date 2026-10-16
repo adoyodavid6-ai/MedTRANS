@@ -1,4 +1,5 @@
 import { CalendarCheck } from "lucide-react";
+import { ReportIncident } from "@/components/safety/report-incident";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -30,6 +31,7 @@ export default async function Visits() {
           ) : <p className="text-sm text-muted">The address appears once the patient has paid to confirm.</p>}
           {v.need_description ? <p className="rounded-lg bg-background p-3 text-[0.95rem]">{v.need_description}{v.need_duration ? ` (${NEED_DURATION[v.need_duration]})` : ""}</p> : null}
           <VisitActions bookingId={v.booking_id} status={v.status} />
+          <ReportIncident bookingId={v.booking_id} title="Report a clinical or safety incident" />
           {v.status === "in_progress" && !v.has_record ? <details open className="rounded-xl border border-line p-4"><summary className="cursor-pointer font-semibold">Document and complete the visit</summary><div className="mt-3"><VisitRecordForm bookingId={v.booking_id} /></div></details> : null}
         </Card>
       ))}

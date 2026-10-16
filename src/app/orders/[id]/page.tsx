@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { KeyRound } from "lucide-react";
+import { ReportIncident } from "@/components/safety/report-incident";
 import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -139,6 +140,7 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
       </Card>
 
       {["pending_payment", "awaiting_pharmacy_acceptance"].includes(o.status) ? <CancelForm orderId={o.id} paid={paid} /> : null}
+      {o.status !== "pending_payment" ? <ReportIncident orderId={o.id} title="Report a problem with this order or medicine" /> : null}
     </div>
   );
 }

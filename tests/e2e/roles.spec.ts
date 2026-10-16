@@ -28,7 +28,8 @@ test("a courier has no access to clinical or pharmacy portals", async ({ page })
 test("support staff see the operations overview but not admin tools", async ({ page }) => {
   await signIn(page, PHONES.support);
   await expect(page).toHaveURL(/\/ops$/);
-  await expect(page.getByText("Support tools are not active yet")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Open the support ticket queue" })).toBeVisible();
+  expect((await page.goto("/ops/support"))?.status()).toBe(200);
   expect((await page.goto("/ops/users"))?.status()).toBe(403);
   expect((await page.goto("/ops/audit"))?.status()).toBe(403);
 });

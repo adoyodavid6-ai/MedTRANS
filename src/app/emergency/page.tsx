@@ -3,8 +3,9 @@ import Link from "next/link";
 import { ArrowLeft, Phone, Siren } from "lucide-react";
 import { Alert } from "@/components/ui/alert";
 import { Card } from "@/components/ui/card";
-import { getVerifiedEmergencyContacts, telHref } from "@/lib/emergency/contacts";
+import { getVerifiedEmergencyContacts, isEmergencyOperationStaffed, telHref } from "@/lib/emergency/contacts";
 import { site } from "@/lib/site/config";
+import { CallbackForm } from "./callback-form";
 import { ShareLocation } from "./share-location";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export const revalidate = 300;
  */
 export default async function EmergencyPage() {
   const result = await getVerifiedEmergencyContacts(site.pilot.countryCode);
+  const staffed = await isEmergencyOperationStaffed();
   const contacts = result.state === "ok" ? result.contacts : [];
 
   return (
@@ -81,9 +83,15 @@ export default async function EmergencyPage() {
           )}
         </section>
 
-        <Alert tone="warning" title="MedTRANS is not an emergency service">
-          <p>We cannot send an ambulance or emergency responders, and we do not monitor requests around the clock.</p>
-        </Alert>
+        {staffed ? (
+          <Alert tone="warning" title="MedTRANS does not send ambulances">
+            <p>Our responders can call you back and help coordinate, but they are not a replacement for local emergency services. Don&apos;t wait for our call if life is at risk.</p>
+          </Alert>
+        ) : (
+          <Alert tone="warning" title="MedTRANS is not an emergency service">
+            <p>We cannot send an ambulance or emergency responders, and we do not monitor requests around the clock.</p>
+          </Alert>
+        )}
 
         <Card className="space-y-3">
           <h2 className="text-xl font-semibold">When you call, say:</h2>
@@ -102,6 +110,14 @@ export default async function EmergencyPage() {
           <p className="text-[0.95rem] text-muted">Your phone can show your coordinates so you can read them to the operator.</p>
           <ShareLocation />
         </Card>
+
+        {staffed ? (
+          <Card className="space-y-3">
+            <h2 className="text-xl font-semibold">Want a MedTRANS responder to call you?</h2>
+            <p className="text-[0.95rem] text-muted">Optional. Keep calling emergency services first if life is at risk. You&apos;ll see honestly whether a responder has seen your request.</p>
+            <CallbackForm />
+          </Card>
+        ) : null}
 
         <Card className="space-y-2">
           <h2 className="text-lg font-semibold">Not an emergency?</h2>

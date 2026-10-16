@@ -1,4 +1,5 @@
 import { ShoppingBag } from "lucide-react";
+import { ReportIncident } from "@/components/safety/report-incident";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -31,6 +32,7 @@ export default async function PharmacyOrders() {
       <ul className="text-[0.95rem]">{o.order_items.map((i) => <li key={i.product_name}>{i.quantity} × {i.product_name} {i.strength}</li>)}</ul>
       <p className="text-sm text-muted">{formatMoney(o.total_minor, o.currency)} · paid{o.prescription_id ? " · prescription approved by your pharmacist" : ""}</p>
       <OrderActions orderId={o.id} status={o.status} />
+      <ReportIncident orderId={o.id} title="Report a safety incident" />
     </Card>
   );
   return (
