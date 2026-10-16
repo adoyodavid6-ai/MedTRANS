@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { isSupabaseConfigured } from "@/lib/env";
+import { track } from "@/lib/analytics/track";
 import { createAnonClient } from "@/lib/supabase/server";
 
 const Point = z.object({
@@ -19,6 +20,7 @@ export async function checkCoverage(input: unknown): Promise<CoverageResult> {
   if (!parsed.success) return { state: "error", message: "That location doesn't look valid. Please try again." };
   if (!isSupabaseConfigured()) return { state: "error", message: "Coverage checking is not available right now." };
 
+  await track("coverage_check", "/coverage");
   const { data, error } = await createAnonClient().rpc("check_coverage", parsed.data);
   if (error) return { state: "error", message: "We couldn't check coverage just now. Please try again shortly." };
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { randomUUID } from "node:crypto";
+import { TrackView } from "@/components/analytics/track-view";
 import { Alert } from "@/components/ui/alert";
 import { requireAccount } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
@@ -31,6 +32,7 @@ export default async function BookPage({ searchParams }: { searchParams: Promise
 
   return (
     <div className="container-page max-w-3xl space-y-6 py-10">
+      <TrackView event="booking_started" path="/doctorcare/book" />
       <h1 className="text-3xl font-bold">Request a home visit</h1>
       <Alert tone="urgent" title="Not for emergencies"><p>If someone&apos;s life may be at risk, contact local emergency services now. <a href="/emergency" className="font-semibold underline">Emergency Help</a></p></Alert>
       {(services ?? []).length === 0 || !reviewed ? (

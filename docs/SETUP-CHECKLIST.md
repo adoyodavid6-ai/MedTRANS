@@ -72,7 +72,7 @@ Nothing below is guessed in code. Each value appears in the app as an explicit t
 ## Payments
 - [ ] `[[ENV: MPESA_CONSUMER_KEY]]`, `[[ENV: MPESA_CONSUMER_SECRET]]`, `[[ENV: MPESA_SHORTCODE]]`, `[[ENV: MPESA_PASSKEY]]`, `[[ENV: MPESA_CALLBACK_URL]]` (sandbox first)
 - [ ] `[[CONFIRM: Pesapal / Paystack needed at launch?]]` → `[[ENV: PESAPAL_*]]` / `[[ENV: PAYSTACK_SECRET_KEY]]`
-- [ ] `[[CONFIRM: commission rates, settlement schedule, refund policy]]`
+- [ ] `[[CONFIRM: refund policy]]` (commission and settlements: see Phase 5 below)
 
 ## Safety, support & notifications: built in Phase 4
 - [ ] `[[CONFIRM: staffed emergency operation]]`: the callback-request feature stays off until an admin records staffed hours and a named supervisor (Operations → Emergency operation) and at least one trained responder has the role
@@ -81,6 +81,16 @@ Nothing below is guessed in code. Each value appears in the app as an explicit t
 - [ ] SMS via Africa's Talking: `[[ENV: AFRICASTALKING_API_KEY]]`, `[[ENV: AFRICASTALKING_USERNAME]]`, `[[ENV: SMS_SENDER_ID]]`. **Adapter written, not yet tested against a live account.** Until set, SMS are recorded as "skipped".
 - [ ] Email: `[[ENV: EMAIL_API_URL]]`, `[[ENV: EMAIL_API_KEY]]`, `[[ENV: EMAIL_FROM]]` (any HTTPS email API taking from/to/subject/text). Not yet tested.
 - [ ] `[[CONFIRM: support hours and response targets]]`
+
+## Commercial, content & growth: built in Phase 5
+- [ ] `[[CONFIRM: pharmacy commission rate]]` → set `commission.pharmacy_bps` (basis points of item sales; e.g. 1000 = 10%) in Operations → Settings. Settlements refuse to run until set.
+- [ ] `[[CONFIRM: DoctorCare commission rate]]` → set `commission.doctorcare_bps` (basis points of the visit fee).
+- [ ] `[[CONFIRM: settlement schedule and payout method]]`: MedTRANS does **not** send payouts. An admin approves a settlement; a *different* admin records the bank/M-Pesa B2C reference after paying it.
+- [ ] `[[CONFIRM: subscription plan names, prices and billing periods]]`: plans stay hidden until a price and period are entered. Nothing is billed automatically.
+- [ ] `[[CONFIRM: clinical reviewers for health articles]]`: an article can only be published with the reviewer's name, credentials and review date. Editing the text withdraws it until re-reviewed.
+- [ ] `[[CONFIRM: partnerships contact owner]]`: who reviews applications in Operations → Applications, and the response target.
+- [ ] Analytics: first-party, aggregate-only counts (day, event, page). No cookies, user IDs or IP addresses are stored, so no consent banner is needed for it. `[[CONFIRM: analytics approach with your DPO]]`.
+- [ ] `[[ENV: NEXT_PUBLIC_SITE_URL]]` must be the real domain so the sitemap, canonical URLs and social images are correct.
 
 ## Notifications
 - [ ] `[[CONFIRM: SMS provider — e.g. Africa's Talking]]` → `[[ENV: SMS_API_KEY]]`, `[[ENV: SMS_SENDER_ID]]`

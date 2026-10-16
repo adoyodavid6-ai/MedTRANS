@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/page-header";
+import { JsonLd } from "@/components/seo/json-ld";
 import { RxBadge } from "@/components/pharmacy/rx-badge";
 import { Badge, VerificationBadge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { formatMoney } from "@/lib/money";
 import { stockLabel } from "@/lib/pharmacy/status";
+import { siteUrl } from "@/lib/env";
 import { createAnonClient } from "@/lib/supabase/server";
 
 type Dir = {
@@ -39,6 +41,7 @@ export default async function PharmacyProfile({ params }: { params: Promise<{ sl
   const fmtDate = (d: string) => new Intl.DateTimeFormat("en-GB", { dateStyle: "medium" }).format(new Date(d));
   return (
     <>
+      {p.verification_status === "verified" ? <JsonLd data={{ "@context": "https://schema.org", "@type": "Pharmacy", name: p.name, address: p.address_line, url: `${siteUrl}/pharmacies/${p.slug}` }} /> : null}
       <PageHeader title={p.name} intro={p.address_line}>
         <div className="mt-3 flex flex-wrap gap-1.5">
           <VerificationBadge status={p.verification_status} />

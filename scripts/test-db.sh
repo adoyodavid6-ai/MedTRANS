@@ -10,8 +10,8 @@ psql "$DB_URL" -qX -v ON_ERROR_STOP=1 -f supabase/tests/00_helpers.sql >/dev/nul
 fail=0
 for f in supabase/tests/*.test.sql; do
   out=$(PGOPTIONS='-c search_path=public,extensions' psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -f "$f" 2>&1) || fail=1
-  if echo "$out" | grep -qE '^not ok|Looks like you|ERROR'; then fail=1; fi
-  echo "== $f"; echo "$out" | grep -E '^(ok|not ok|#|1\.\.)|ERROR' | sed 's/^/   /'
+  if echo "$out" | grep -qE '^not ok|Looks like you|ERROR|^psql:'; then fail=1; fi
+  echo "== $f"; echo "$out" | grep -E '^(ok|not ok|#|1\.\.)|ERROR|^psql:' | sed 's/^/   /'
 done
 
 psql "$DB_URL" -qX -c 'drop schema if exists tests cascade;' >/dev/null

@@ -1,7 +1,9 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { FOOTER_NAV, MAIN_NAV, PUBLIC_ROUTES } from "@/lib/site/routes";
+import { FOOTER_NAV, MAIN_NAV, PUBLIC_ROUTES, type PublicRoute } from "@/lib/site/routes";
+
+const ROUTES: readonly PublicRoute[] = PUBLIC_ROUTES;
 
 const APP = join(process.cwd(), "src/app");
 const pageFile = (href: string) => join(APP, href === "/" ? "" : href, "page.tsx");
@@ -23,12 +25,11 @@ describe("route registry (§21: every nav item reaches a page)", () => {
     expect(() => readFileSync(pageFile(href))).not.toThrow();
   });
 
-  it.each(PUBLIC_ROUTES.filter((r) => r.status === "planned").map((r) => [r.href] as const))(
-    "planned page %s shows the not-yet-activated state",
-    (href) => {
-      expect(readFileSync(pageFile(href), "utf8")).toContain(`<NotYetActivated href="${href}" />`);
-    },
-  );
+  it("planned pages show the not-yet-activated state", () => {
+    for (const r of ROUTES.filter((x) => x.status === "planned")) {
+      expect(readFileSync(pageFile(r.href), "utf8")).toContain(`<NotYetActivated href="${r.href}" />`);
+    }
+  });
 
   it("nav only links to registered routes", () => {
     const known = new Set<string>(PUBLIC_ROUTES.map((r) => r.href));

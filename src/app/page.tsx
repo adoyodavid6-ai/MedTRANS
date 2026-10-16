@@ -14,6 +14,7 @@ import {
   Siren,
   Stethoscope,
 } from "lucide-react";
+import { TrackView } from "@/components/analytics/track-view";
 import { LocationSelector } from "@/components/layout/location-selector";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
@@ -115,6 +116,7 @@ const faqs = [
 export default function HomePage() {
   return (
     <>
+      <TrackView event="landing_view" path="/" />
       {/* Hero: the three core actions, above the fold on a phone (§6). */}
       <section className="border-b border-line bg-gradient-to-b from-surface to-background">
         <div className="container-page grid gap-10 py-8 sm:py-14 lg:grid-cols-[1.15fr_1fr] lg:items-center">

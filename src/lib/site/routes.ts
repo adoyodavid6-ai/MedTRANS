@@ -45,10 +45,10 @@ export const PUBLIC_ROUTES = [
   { href: "/bookings/status", title: "Booking status", description: "Follow your home-visit request.", status: "live", phase: 3, module: "doctorcare", noindex: true },
   { href: "/smartcare/map", title: "SmartCare map", description: "Suitable, available care near you, on a map and as a list.", status: "live", phase: 3, module: "smartcare" },
 
-  { href: "/resources", title: "Health resources", description: "Professionally reviewed health information.", status: "planned", phase: 5, module: "company" },
+  { href: "/resources", title: "Health resources", description: "Professionally reviewed health information.", status: "live", phase: 5, module: "company" },
   { href: "/join/provider", title: "Join as a doctor or nurse", description: "Register to provide home visits through MedTRANS.", status: "live", phase: 3, module: "partners" },
-  { href: "/join/pharmacy", title: "Register your pharmacy", description: "List your licensed pharmacy on MedTRANS.", status: "planned", phase: 2, module: "partners" },
-  { href: "/partnerships", title: "Partnerships", description: "Work with MedTRANS as an organisation or institution.", status: "planned", phase: 5, module: "partners" },
+  { href: "/join/pharmacy", title: "Register your pharmacy", description: "List your licensed pharmacy on MedTRANS.", status: "live", phase: 2, module: "partners" },
+  { href: "/partnerships", title: "Partnerships", description: "Work with MedTRANS as an organisation or institution.", status: "live", phase: 5, module: "partners" },
 ] as const satisfies readonly PublicRoute[];
 
 export type PublicHref = (typeof PUBLIC_ROUTES)[number]["href"];

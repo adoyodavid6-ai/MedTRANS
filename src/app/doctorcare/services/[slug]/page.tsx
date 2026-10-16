@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { TrackView } from "@/components/analytics/track-view";
 import { PageHeader } from "@/components/page-header";
 import { Alert } from "@/components/ui/alert";
 import { ButtonLink } from "@/components/ui/button";
@@ -33,6 +34,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   const { s, fees } = r;
   return (
     <>
+      <TrackView event="doctorcare_service_view" path={`/doctorcare/services/${s.slug}`} />
       <PageHeader eyebrow="DoctorCare" title={s.name} intro={s.summary}>
         <div className="mt-6"><ButtonLink href={`/doctorcare/book?service=${s.slug}`} size="lg">Request this visit</ButtonLink></div>
       </PageHeader>

@@ -8,6 +8,7 @@ const NAV = [
   { href: "/portal/pharmacy/prescriptions", label: "Prescriptions" },
   { href: "/portal/pharmacy/orders", label: "Orders" },
   { href: "/portal/pharmacy/inventory", label: "Inventory" },
+  { href: "/portal/pharmacy/settlements", label: "Settlements" },
 ];
 
 export default async function Layout({ children }: { children: React.ReactNode }) {

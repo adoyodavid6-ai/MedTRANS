@@ -76,9 +76,11 @@ select tests.act_as(:'patient');
 select ok(public.report_incident('adverse_reaction', 'Rash after taking a medicine') like 'SI-%', 'a patient can report a safety incident');
 select tests.reset_role();
 select tests.create_user('ss-x@example.test') as x \gset
+select tests.create_user('ss-pharm@example.test') as ssph \gset
+select tests.setup_pharmacy(:'admin', :'ssph', 'ss-pharmacy') as ssphid \gset
 insert into public.orders (patient_id, pharmacy_id, currency, subtotal_minor, delivery_fee_minor, service_fee_minor, tax_minor, total_minor,
   delivery_address, delivery_location, recipient_name, idempotency_key, handover_code)
-select :'x', p.id, 'KES', 100, 0, 0, 0, 100, '{}', 'SRID=4326;POINT(36.8 -1.3)', 'X', gen_random_uuid(), '0000' from public.pharmacies p limit 1;
+select :'x', p.id, 'KES', 100, 0, 0, 0, 100, '{}', 'SRID=4326;POINT(36.8 -1.3)', 'X', gen_random_uuid(), '0000' from public.pharmacies p where p.id = :'ssphid';
 select id as xorder from public.orders where patient_id = :'x' limit 1 \gset
 select tests.act_as(:'other');
 select throws_ok(format($$select public.report_incident('dispensing_error', 'Not my order at all', 'moderate', %L)$$, :'xorder'),

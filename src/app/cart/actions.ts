@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getSessionUser, requireAccount } from "@/lib/auth/session";
 import type { FormState } from "@/lib/forms";
+import { track } from "@/lib/analytics/track";
 import { createClient } from "@/lib/supabase/server";
 
 const Add = z.object({ inventory_id: z.uuid(), quantity: z.coerce.number().int().min(1).max(20) });
@@ -32,6 +33,7 @@ export async function addToCart(_prev: FormState, formData: FormData): Promise<F
   const { error } = await supabase.from("cart_items").upsert({ user_id: user.id, inventory_item_id: p.data.inventory_id, quantity });
   if (error) return { error: "We couldn't add that to your cart. Please try again." };
   revalidatePath("/cart");
+  await track("add_to_cart", "/cart");
   return { ok: "Added to your cart." };
 }
 

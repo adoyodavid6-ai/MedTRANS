@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { AnnouncementStrip } from "@/components/layout/announcement-strip";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { JsonLd } from "@/components/seo/json-ld";
 import { siteUrl } from "@/lib/env";
 import { site } from "@/lib/site/config";
 import "./globals.css";
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </main>
         <SiteFooter />
+        <JsonLd data={{ "@context": "https://schema.org", "@type": "Organization", name: site.name, url: siteUrl, slogan: site.promise, areaServed: `${site.pilot.city}, ${site.pilot.country}` }} />
       </body>
     </html>
   );

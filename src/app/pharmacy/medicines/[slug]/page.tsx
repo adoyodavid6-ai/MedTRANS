@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Pill, Store } from "lucide-react";
+import { TrackView } from "@/components/analytics/track-view";
 import { AddToCart } from "@/components/pharmacy/add-to-cart";
 import { RxBadge } from "@/components/pharmacy/rx-badge";
 import { Alert } from "@/components/ui/alert";
@@ -50,6 +51,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="container-page max-w-4xl py-8 sm:py-10">
+      <TrackView event="product_view" path={path} />
       <nav aria-label="Breadcrumb" className="text-sm text-muted">
         <Link href="/pharmacy" className="underline">Pharmacy</Link> / <Link href="/pharmacy/medicines" className="underline">Medicines</Link> / {m.name}
       </nav>

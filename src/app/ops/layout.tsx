@@ -7,6 +7,11 @@ export const metadata: Metadata = { title: "Operations", robots: { index: false,
 const NAV = [
   { href: "/ops", label: "Overview" },
   { href: "/ops/support", label: "Support tickets" },
+  { href: "/ops/analytics", label: "Analytics" },
+  { href: "/ops/settlements", label: "Settlements" },
+  { href: "/ops/applications", label: "Partner applications" },
+  { href: "/ops/plans", label: "Plans" },
+  { href: "/ops/articles", label: "Health resources" },
   { href: "/ops/users", label: "Users & roles" },
   { href: "/ops/orders", label: "Orders & dispatch" },
   { href: "/ops/pharmacies", label: "Pharmacies" },
@@ -25,7 +30,7 @@ const NAV = [
 
 export default async function OpsLayout({ children }: { children: React.ReactNode }) {
   const user = await requireAccount("/ops", ["admin", "support"]);
-  const nav = user.roles.includes("admin") ? NAV : NAV.slice(0, 2);
+  const nav = user.roles.includes("admin") ? NAV : NAV.filter((n) => ["/ops", "/ops/support"].includes(n.href));
   return (
     <AreaShell title="Operations" roles={user.roles} nav={nav}>
       {children}

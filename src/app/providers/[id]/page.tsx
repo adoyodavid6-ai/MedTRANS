@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { z } from "zod";
 import { ProviderCard, type DirectoryProvider } from "@/components/doctorcare/provider-card";
+import { JsonLd } from "@/components/seo/json-ld";
 import { ButtonLink } from "@/components/ui/button";
+import { siteUrl } from "@/lib/env";
 import { createAnonClient } from "@/lib/supabase/server";
 
 async function load(id: string) {
@@ -21,6 +23,7 @@ export default async function ProviderPage({ params }: { params: Promise<{ id: s
   if (!p) notFound();
   return (
     <div className="container-page max-w-3xl space-y-6 py-10">
+      <JsonLd data={{ "@context": "https://schema.org", "@type": p.profession === "doctor" ? "Physician" : "Person", name: p.display_name, url: `${siteUrl}/providers/${p.provider_id}`, ...(p.profession === "doctor" ? {} : { jobTitle: "Nurse" }) }} />
       <h1 className="text-3xl font-bold">{p.display_name}</h1>
       <ProviderCard p={p} />
       {p.bio ? <p className="text-[0.95rem]">{p.bio}</p> : null}

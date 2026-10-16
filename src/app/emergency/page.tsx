@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Phone, Siren } from "lucide-react";
+import { TrackView } from "@/components/analytics/track-view";
 import { Alert } from "@/components/ui/alert";
 import { Card } from "@/components/ui/card";
 import { getVerifiedEmergencyContacts, isEmergencyOperationStaffed, telHref } from "@/lib/emergency/contacts";
@@ -32,6 +33,7 @@ export default async function EmergencyPage() {
 
   return (
     <div className="bg-urgent-soft/40">
+      <TrackView event="emergency_view" path="/emergency" />
       <div className="container-page max-w-3xl space-y-6 py-6 sm:py-10">
         <header className="space-y-3">
           <p className="inline-flex items-center gap-2 text-sm font-semibold text-urgent">

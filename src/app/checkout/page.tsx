@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { randomUUID } from "node:crypto";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { TrackView } from "@/components/analytics/track-view";
 import { Alert } from "@/components/ui/alert";
 import { Card } from "@/components/ui/card";
 import { requireAccount } from "@/lib/auth/session";
@@ -42,6 +43,7 @@ export default async function CheckoutPage({ searchParams }: { searchParams: Pro
 
   return (
     <div className="container-page max-w-3xl space-y-6 py-10">
+      <TrackView event="checkout_started" path="/checkout" />
       <h1 className="text-3xl font-bold">Checkout</h1>
 
       <Card className="space-y-3">

@@ -7,6 +7,7 @@ import { requireAccount } from "@/lib/auth/session";
 import { currentPolicyVersion } from "@/lib/consent/server";
 import { EXT, MAX_UPLOAD_BYTES, sniffMime } from "@/lib/files/sniff";
 import type { FormState } from "@/lib/forms";
+import { track } from "@/lib/analytics/track";
 import { createClient } from "@/lib/supabase/server";
 
 const Input = z.object({
@@ -40,6 +41,7 @@ export async function submitPrescription(_prev: FormState, formData: FormData): 
   });
   if (!parsed.success) return { error: "Something went wrong. Please refresh and try again." };
 
+  await track("prescription_upload_started", "/cart");
   const bytes = new Uint8Array(await file.arrayBuffer());
   const mime = sniffMime(bytes);
   if (!mime) return { fieldErrors: { file: "Upload a JPG, PNG or WebP photo, or a PDF." } };
