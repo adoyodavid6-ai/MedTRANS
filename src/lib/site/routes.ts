@@ -47,6 +47,7 @@ export const PUBLIC_ROUTES = [
 
   { href: "/resources", title: "Health resources", description: "Professionally reviewed health information.", status: "live", phase: 5, module: "company" },
   { href: "/join/provider", title: "Join as a doctor or nurse", description: "Register to provide home visits through MedTRANS.", status: "live", phase: 3, module: "partners" },
+  { href: "/join/courier", title: "Deliver with MedTRANS", description: "Apply to deliver medicines as a MedTRANS delivery partner.", status: "live", phase: 2, module: "partners" },
   { href: "/join/pharmacy", title: "Register your pharmacy", description: "List your licensed pharmacy on MedTRANS.", status: "live", phase: 2, module: "partners" },
   { href: "/partnerships", title: "Partnerships", description: "Work with MedTRANS as an organisation or institution.", status: "live", phase: 5, module: "partners" },
 ] as const satisfies readonly PublicRoute[];
@@ -112,6 +113,7 @@ export const NAV_GROUPS: { label: string; links: { href: PublicHref; label: stri
     links: [
       { href: "/join/provider", label: "Join as a doctor or nurse" },
       { href: "/join/pharmacy", label: "Register your pharmacy" },
+      { href: "/join/courier", label: "Deliver with MedTRANS" },
       { href: "/partnerships", label: "Partnerships" },
     ],
   },
@@ -151,6 +153,7 @@ export const FOOTER_NAV: { heading: string; links: { href: PublicHref; label: st
       { href: "/partnerships", label: "Partnerships" },
       { href: "/join/provider", label: "Join as a provider" },
       { href: "/join/pharmacy", label: "Register a pharmacy" },
+      { href: "/join/courier", label: "Deliver with MedTRANS" },
     ],
   },
   {

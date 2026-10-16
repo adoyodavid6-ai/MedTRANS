@@ -152,7 +152,7 @@ export function CourierForm({ userId, status }: { userId: string; status: string
     <form action={f.action} className="flex flex-wrap items-end gap-2">
       <FormStatus state={f.state} />
       <input type="hidden" name="user_id" value={userId} />
-      <label className="text-sm">Status<Select name="status" defaultValue={status} className="min-w-36"><option value="unverified">unverified</option><option value="verified">verified</option><option value="suspended">suspended</option></Select></label>
+      <label className="text-sm">Status<Select name="status" defaultValue={status} className="min-w-36"><option value="pending">pending</option><option value="unverified">unverified</option><option value="verified">verified</option><option value="suspended">suspended</option></Select></label>
       <label className="text-sm">How identity was checked<Input name="check_method" className="w-64" /></label>
       <Confirm />
       <Button type="submit" variant="secondary" disabled={f.pending}>Save</Button>

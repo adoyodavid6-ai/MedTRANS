@@ -179,7 +179,7 @@ export async function dispatchAction(_prev: FormState, formData: FormData): Prom
   return error ? { error: dbError(error) ?? error.message } : { ok: "Done." };
 }
 
-const Courier = z.object({ user_id: z.uuid(), status: z.enum(["verified", "suspended", "unverified"]), check_method: z.string().trim().max(300).optional(), confirm: z.literal("yes") });
+const Courier = z.object({ user_id: z.uuid(), status: z.enum(["verified", "pending", "suspended", "unverified"]), check_method: z.string().trim().max(300).optional(), confirm: z.literal("yes") });
 
 export async function setCourierStatus(_prev: FormState, formData: FormData): Promise<FormState> {
   await requireAccount("/ops/couriers", ADMIN);
@@ -190,6 +190,12 @@ export async function setCourierStatus(_prev: FormState, formData: FormData): Pr
   const { error } = await supabase.from("courier_profiles").upsert({
     user_id: p.data.user_id, verification_status: p.data.status, check_method: p.data.check_method ?? null, is_available: p.data.status === "verified",
   });
+  if (error) return { error: dbError(error) };
+  // Verifying an applicant gives them the delivery partner role (and so the delivery portal).
+  if (p.data.status === "verified") {
+    const { error: roleError } = await supabase.rpc("admin_grant_role", { target: p.data.user_id, r: "courier" });
+    if (roleError) return { error: "Verified, but the delivery partner role could not be granted. Grant it in Users & roles." };
+  }
   revalidatePath("/ops/couriers");
-  return error ? { error: dbError(error) } : { ok: "Saved." };
+  return { ok: "Saved." };
 }
