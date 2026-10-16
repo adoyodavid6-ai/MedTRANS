@@ -1,0 +1,42 @@
+{
+  "name": "medtrans",
+  "version": "0.1.0",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adoyodavid6-ai/MedTRANS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adoyodavid6-ai/MedTRANS/issues"
+  },
+  "homepage": "https://github.com/adoyodavid6-ai/MedTRANS#readme",
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.2",
+    "supabase": "^2.40.7",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "private": true,
+  "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
+    "lucide-react": "^1.58.0",
+    "next": "16.4.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "^4.6.7"
+  }
+}
