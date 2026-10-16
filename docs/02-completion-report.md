@@ -23,7 +23,7 @@ Journeys A–D from §22 run in the browser across several real signed-in roles:
 - **Pharmacies and clinicians:** real licences and registrations, checked with the PPB and KMPDC/NCK.
 - **Clinical content:** DoctorCare screening questions and every article need named clinical review.
 - **Commercial terms:** commission rates and plan prices.
-- **Hosted Supabase:** project `bsiyaddxphdsenwqybro` is not linked yet. This environment's network policy blocks supabase.co, and no access token or database password was provided (see `DEPLOYMENT.md`).
+- **Hosted Supabase:** migrations are applied to project `bsiyaddxphdsenwqybro` (16 Oct 2026). Phone sign-in (an SMS provider) and the first administrator are still to be set up (see `DEPLOYMENT.md`).
 - **Monitoring endpoint:** `ERROR_REPORT_URL`.
 
 The full list of tokens is in `SETUP-CHECKLIST.md`.

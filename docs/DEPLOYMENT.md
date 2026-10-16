@@ -25,6 +25,10 @@ npx supabase db push
 
 Then create the first administrator (see README → Bootstrapping).
 
+## Status of the hosted project (`bsiyaddxphdsenwqybro`, eu-west-1)
+- 16 Oct 2026: all 16 migrations applied through `scripts/apply-hosted-migrations.py` and recorded in `supabase_migrations.schema_migrations`. Checked afterwards: 52 public tables, all with RLS; every SECURITY DEFINER function pins `search_path`; pg_cron jobs `medtrans-expire-unpaid-orders` and `medtrans-expire-booking-offers` scheduled; private `prescriptions` bucket; Kenya and Somalia inactive; emergency callback off; no users, no seed data.
+- Still to do in the dashboard: enable the **Phone** provider with a real SMS provider, then bootstrap the first administrator (README).
+
 ## Without a direct database connection
 Some environments (like the cloud session used to build this) can reach `api.supabase.com` over HTTPS but cannot open a Postgres connection, so `supabase db push` fails. `scripts/apply-hosted-migrations.py` applies the same migrations through the Management API, one transaction per migration, and records each in `supabase_migrations.schema_migrations` so the CLI stays in sync:
 
