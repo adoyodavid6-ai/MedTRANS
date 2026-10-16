@@ -146,15 +146,15 @@ password_requirements = ""
 # Number of emails that can be sent per hour. Requires auth.email.smtp to be enabled.
 email_sent = 2
 # Number of SMS messages that can be sent per hour. Requires auth.sms to be enabled.
-sms_sent = 30
+sms_sent = 1000  # local/E2E only. Production: [[CONFIRM: auth rate limits]]
 # Number of anonymous sign-ins that can be made per hour per IP address. Requires enable_anonymous_sign_ins = true.
 anonymous_users = 30
 # Number of sessions that can be refreshed in a 5 minute interval per IP address.
 token_refresh = 150
 # Number of sign up and sign-in requests that can be made in a 5 minute interval per IP address (excludes anonymous users).
-sign_in_sign_ups = 30
+sign_in_sign_ups = 1000  # local/E2E only
 # Number of OTP / Magic link verifications that can be made in a 5 minute interval per IP address.
-token_verifications = 30
+token_verifications = 1000  # local/E2E only
 # Number of Web3 logins that can be made in a 5 minute interval per IP address.
 web3 = 30
 
@@ -204,13 +204,22 @@ enable_confirmations = false
 # Template for sending OTP to users
 template = "Your code is {{ .Code }}"
 # Controls the minimum amount of time that must pass before sending another sms otp.
-max_frequency = "5s"
+max_frequency = "1s"  # local/E2E only (per-number resend interval)
 
 # Use pre-defined map of phone number to OTP for testing.
 [auth.sms.test_otp]
-# Local development only. Synthetic Kenyan test numbers; never real people.
+# Local development only: these numbers never receive an SMS; the code is fixed.
+# They match the synthetic accounts created by scripts/seed-dev.ts (one per role).
 254700000001 = "123456"
 254700000002 = "123456"
+254700000003 = "123456"
+254700000004 = "123456"
+254700000005 = "123456"
+254700000006 = "123456"
+254700000007 = "123456"
+254700000008 = "123456"
+254700000009 = "123456"
+254700000010 = "123456"
 
 # Configure logged in session timeouts.
 # [auth.sessions]

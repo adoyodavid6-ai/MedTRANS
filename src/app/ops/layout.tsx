@@ -1,0 +1,24 @@
+import type { Metadata } from "next";
+import { AreaShell } from "@/components/account/area-shell";
+import { requireAccount } from "@/lib/auth/session";
+
+export const metadata: Metadata = { title: "Operations", robots: { index: false, follow: false } };
+
+const NAV = [
+  { href: "/ops", label: "Overview" },
+  { href: "/ops/users", label: "Users & roles" },
+  { href: "/ops/coverage", label: "Countries & coverage" },
+  { href: "/ops/emergency-contacts", label: "Emergency contacts" },
+  { href: "/ops/settings", label: "Settings" },
+  { href: "/ops/audit", label: "Audit log" },
+];
+
+export default async function OpsLayout({ children }: { children: React.ReactNode }) {
+  const user = await requireAccount("/ops", ["admin", "support"]);
+  const nav = user.roles.includes("admin") ? NAV : NAV.slice(0, 1);
+  return (
+    <AreaShell title="Operations" roles={user.roles} nav={nav}>
+      {children}
+    </AreaShell>
+  );
+}

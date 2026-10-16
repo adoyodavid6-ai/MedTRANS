@@ -4,6 +4,8 @@ select plan(14);
 select tests.create_user('admin@example.test') as admin \gset
 select tests.create_user('carol@example.test') as carol \gset
 select tests.make_admin(:'admin');
+-- Isolate from any seeded data: within this (rolled-back) transaction, :admin is the only administrator.
+update public.user_roles set revoked_at = now() where role = 'admin' and user_id <> :'admin';
 
 -- Carol stores something private
 select tests.act_as(:'carol');

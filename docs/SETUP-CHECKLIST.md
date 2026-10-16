@@ -2,14 +2,20 @@
 
 Nothing below is guessed in code. Each value appears in the app as an explicit token or a disabled state until it is provided.
 
-## Blocking for Phase 1
-- [ ] `[[CONFIRM: stack — Next.js + Supabase as proposed in 00-audit-and-plan.md]]`
+## Decided
+- [x] Stack: Next.js + Supabase (approved 2026-10-16)
+- [x] Pilot market: Nairobi, Kenya (approved 2026-10-16)
+
+## Needed to deploy Phase 1
 - [ ] `[[CONFIRM: hosting — Vercel or other]]`
 - [ ] `[[CONFIRM: Supabase project region / data residency]]`
-- [ ] `[[CONFIRM: launch market(s) and first city for pilot — e.g. Nairobi only?]]`
-- [ ] `[[CONFIRM: brand assets — logo, wordmark, approved photography; or proceed with text wordmark]]`
-- [ ] `[[CONFIRM: languages at launch — English only, or English + Kiswahili + Somali]]`
-- [ ] `[[ENV: NEXT_PUBLIC_SUPABASE_URL]]`, `[[ENV: NEXT_PUBLIC_SUPABASE_ANON_KEY]]`, `[[ENV: SUPABASE_SERVICE_ROLE_KEY]]` (server only). Local dev works without them.
+- [ ] `[[ENV: NEXT_PUBLIC_SUPABASE_URL]]`, `[[ENV: NEXT_PUBLIC_SUPABASE_ANON_KEY]]`, `[[ENV: SUPABASE_SERVICE_ROLE_KEY]]` (server only; used by the dev seed, not the app), `[[ENV: NEXT_PUBLIC_SITE_URL]]`
+- [ ] `[[CONFIRM: SMS provider for phone sign-in codes]]`. Without it, phone sign-in cannot work in production. Supabase supports Twilio, MessageBird, Textlocal and Vonage; Africa's Talking would need a custom Auth SMS hook.
+- [ ] `[[CONFIRM: SMTP provider for email sign-in codes]]`
+- [ ] `[[CONFIRM: auth rate limits]]` for production: SMS per hour, verifications, per-number resend interval. Local values are raised for testing only.
+- [ ] First administrator account (see README → Bootstrapping)
+- [ ] `[[CONFIRM: brand assets — logo, wordmark, approved photography]]`. A text wordmark is used until supplied.
+- [ ] `[[CONFIRM: languages at launch]]`. English is built; Kiswahili and Somali show as "coming later" until professionally translated.
 
 ## Legal entity & content
 - [ ] `[[CONFIRM: registered business name, address, registration number]]`
@@ -20,9 +26,14 @@ Nothing below is guessed in code. Each value appears in the app as an explicit t
 - [ ] `[[CONFIRM: Somalia regulatory review before any regulated service is activated]]`
 
 ## Emergency (Module D)
-- [ ] `[[CONFIRM: verified emergency number(s) per jurisdiction and per area, with source and date verified]]`
+- [ ] `[[CONFIRM: verified emergency number(s) per jurisdiction and per area, with source and date verified]]`. Entered by an admin in Operations → Emergency contacts. None are hardcoded, and a test enforces that.
+- [ ] `[[CONFIRM: clinical review of emergency guidance copy]]` (`src/app/emergency/page.tsx`: warning signs and "what to say" list)
 - [ ] `[[CONFIRM: is a staffed, authorised MedTRANS emergency coordination operation planned? If not, guidance-and-contact mode only]]`
 - [ ] `[[CONFIRM: clinically reviewed urgent-symptom screening questions and severity rules — named clinical owner]]`
+
+## Coverage
+- [ ] `[[CONFIRM: Nairobi pilot service boundary (GeoJSON MultiPolygon)]]`. Pasted in Operations → Countries & coverage; the area cannot be activated without it.
+- [ ] `[[CONFIRM: PPB / KMPDC / NCK / ODPC review reference]]`. Kenya cannot be activated without a recorded review reference.
 
 ## Pharmacy (Module A)
 - [ ] `[[CONFIRM: partner pharmacies + PPB licence numbers and verification procedure]]`
