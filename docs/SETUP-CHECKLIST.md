@@ -97,7 +97,11 @@ Nothing below is guessed in code. Each value appears in the app as an explicit t
 - [ ] `[[CONFIRM: email provider]]` → `[[ENV: EMAIL_API_KEY]]`, `[[ENV: EMAIL_FROM]]`
 - [ ] `[[CONFIRM: WhatsApp Business API access]]`
 
-## Operations
-- [ ] `[[CONFIRM: error monitoring — e.g. Sentry]]` → `[[ENV: SENTRY_DSN]]`
+## Operations: hardened in Phase 6 (see `RUNBOOK.md`)
+- [ ] `[[CONFIRM: error monitoring — e.g. Sentry]]` → `[[ENV: ERROR_REPORT_URL]]` (+ `[[ENV: ERROR_REPORT_TOKEN]]`). Redacted server errors are always written to host logs; this forwards them too.
+- [ ] `[[CONFIRM: Supabase plan with PITR]]` and `[[CONFIRM: RPO/RTO]]`; `[[CONFIRM: storage backup destination]]` for prescription files; run a restore drill.
+- [ ] `[[CONFIRM: on-call rota and phone]]`, `[[CONFIRM: Supabase plan and support tier]]`, `[[CONFIRM: Daraja account manager contact]]`
+- [ ] `[[CONFIRM: Data Protection Officer contact]]`; registration with the ODPC as a data controller/processor handling health data `[[CONFIRM: ODPC registration number]]`; DPIA for health data `[[CONFIRM: DPIA completed]]`
+- [ ] Rate limiting at the edge (e.g. Vercel Firewall) for `/sign-in`, `/emergency`, `/contact` and `/join/*` `[[CONFIRM: edge rate-limit rules]]`
 - [ ] `[[CONFIRM: analytics tool + consent approach]]`
 - [ ] `[[CONFIRM: record retention periods per data class]]`

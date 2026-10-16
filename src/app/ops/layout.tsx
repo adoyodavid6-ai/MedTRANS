@@ -25,6 +25,7 @@ const NAV = [
   { href: "/ops/coverage", label: "Countries & coverage" },
   { href: "/ops/emergency-contacts", label: "Emergency contacts" },
   { href: "/ops/settings", label: "Settings" },
+  { href: "/ops/data-requests", label: "Data requests" },
   { href: "/ops/audit", label: "Audit log" },
 ];
 

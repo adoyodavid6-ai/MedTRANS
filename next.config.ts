@@ -2,7 +2,37 @@ import type { NextConfig } from "next";
 
 const isProd = process.env.NODE_ENV === "production";
 
+const supabaseOrigin = (() => {
+  try {
+    return new URL(process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").origin;
+  } catch {
+    return "";
+  }
+})();
+
+// Content Security Policy without nonces: nonces would force every page (including the
+// static Emergency Help page) to render per request. 'unsafe-inline' scripts are still needed
+// for Next.js's inline bootstrap; everything else is locked to our own origin and Supabase.
+const csp = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${isProd ? "" : " 'unsafe-eval'"}`,
+  "style-src 'self' 'unsafe-inline'",
+  `img-src 'self' data: blob: ${supabaseOrigin}`.trim(),
+  "font-src 'self'",
+  `connect-src 'self' ${supabaseOrigin}${isProd ? "" : " ws: wss:"}`.trim(),
+  "frame-src 'none'",
+  "frame-ancestors 'none'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "manifest-src 'self'",
+  "worker-src 'self' blob:",
+  ...(isProd ? ["upgrade-insecure-requests"] : []),
+].join("; ");
+
 const securityHeaders = [
+  { key: "Content-Security-Policy", value: csp },
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "DENY" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },

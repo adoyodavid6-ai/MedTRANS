@@ -1,18 +1,28 @@
 import Link from "next/link";
+import { Download } from "lucide-react";
+import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { requireAccount } from "@/lib/auth/session";
 import { CONSENT_PURPOSES, OPTIONAL_PURPOSES, type ConsentPurpose } from "@/lib/consent/purposes";
 import { getMyConsents } from "@/lib/consent/server";
-import { setOptionalConsent } from "./actions";
+import { createClient } from "@/lib/supabase/server";
+import { cancelErasure, setOptionalConsent } from "./actions";
+import { ErasureForm } from "./erasure-form";
 
 const fmt = (iso: string) =>
   new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Africa/Nairobi" }).format(new Date(iso));
 
 export default async function PrivacyPage() {
-  await requireAccount("/account/privacy");
+  const user = await requireAccount("/account/privacy");
   const consents = await getMyConsents();
   const required: ConsentPurpose[] = ["terms_of_service", "privacy_notice"];
+  const supabase = await createClient();
+  const { data: requests } = await supabase.from("data_subject_requests").select("kind, status, created_at, completed_at, outcome_note").eq("user_id", user.id).order("created_at", { ascending: false });
+  const lastExport = (requests ?? []).find((r) => r.kind === "export");
+  const openErasure = (requests ?? []).find((r) => r.kind === "erasure" && ["received", "in_progress"].includes(r.status));
+  const lastClosed = (requests ?? []).find((r) => r.kind === "erasure" && r.completed_at);
 
   return (
     <>
@@ -59,10 +69,32 @@ export default async function PrivacyPage() {
             );
           })}
         </ul>
-        <p className="mt-4 text-sm text-muted">
-          To close your account, export your data or ask us to delete it, contact us via the <Link href="/contact" className="underline">contact page</Link>.
-          A self-service request flow opens with our support system.
-        </p>
+      </Card>
+      <Card className="space-y-3">
+        <h2 className="text-lg font-semibold">Download your data</h2>
+        <p className="text-[0.95rem]">Get a copy of the personal information MedTRANS holds about you, as a file you can keep. It includes your profile, addresses, orders, prescriptions (details, not the files), home visits and support messages.</p>
+        <form method="post" action="/account/privacy/export">
+          <Button type="submit" variant="secondary"><Download aria-hidden className="size-4" />Download my data</Button>
+        </form>
+        {lastExport ? <p className="text-sm text-muted">Last downloaded {fmt(lastExport.created_at)}.</p> : null}
+      </Card>
+      <Card className="space-y-3">
+        <h2 className="text-lg font-semibold">Delete your account</h2>
+        {openErasure ? (
+          <>
+            <Alert tone="info" title="We have your deletion request">
+              <p>Received {fmt(openErasure.created_at)}. Our data protection team will finish any open orders or visits with you first, then delete your information and tell you what we had to keep.</p>
+            </Alert>
+            {openErasure.status === "received" ? <form action={cancelErasure}><Button type="submit" variant="ghost">Withdraw my request</Button></form> : null}
+          </>
+        ) : (
+          <>
+            <p className="text-[0.95rem]">We will delete your profile, saved addresses, household members and messages. By law, we must keep some records for a set period: pharmacy dispensing and payment records, prescriptions and clinical visit notes. Those are kept securely and are not used for anything else.</p>
+            {lastClosed ? <p className="text-sm text-muted">Your last request was {lastClosed.status} on {fmt(lastClosed.completed_at as string)}{lastClosed.outcome_note ? `: ${lastClosed.outcome_note}` : "."}</p> : null}
+            <ErasureForm />
+          </>
+        )}
+        <p className="text-sm text-muted">Questions about your data? <Link href="/contact" className="underline">Contact us</Link>.</p>
       </Card>
     </>
   );

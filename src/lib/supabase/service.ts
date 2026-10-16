@@ -3,7 +3,8 @@ import { createClient } from "@supabase/supabase-js";
 
 /**
  * Service-role client. Bypasses RLS, so it is used ONLY for actions no user may perform:
- * recording payment-provider outcomes after verifying the callback. Never import it into
+ * recording payment-provider outcomes after verifying the callback, and disabling sign-in for an
+ * account whose erasure an administrator has completed. Never import it into
  * anything a user's request can steer beyond that.
  */
 export function createServiceClient() {

@@ -5,13 +5,21 @@ import type { PaymentGateway } from "./types";
 
 /**
  * TEST payment gateway for local development and automated tests. No money moves.
- * It is only available when PAYMENTS_TEST_MODE=enabled and never in a production build
- * (see isTestGatewayEnabled). Its callbacks are HMAC-signed and go through the same
+ * It is only available when PAYMENTS_TEST_MODE=enabled, the site runs on localhost, and the host
+ * is not a Vercel production deployment (see isTestGatewayEnabled). Its callbacks are HMAC-signed and go through the same
  * replay protection and amount checks as a real provider.
  */
+function siteIsLocal() {
+  try {
+    return ["localhost", "127.0.0.1"].includes(new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost").hostname);
+  } catch {
+    return false;
+  }
+}
+
 export function isTestGatewayEnabled() {
   return process.env.PAYMENTS_TEST_MODE === "enabled" && Boolean(process.env.PAYMENTS_TEST_WEBHOOK_SECRET) &&
-    process.env.VERCEL_ENV !== "production";
+    process.env.VERCEL_ENV !== "production" && siteIsLocal();
 }
 
 export const testGateway: PaymentGateway = {

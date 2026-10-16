@@ -6,6 +6,8 @@ Built to the masterplan in the project brief. Planning documents are in [`docs/`
 
 - [`docs/00-audit-and-plan.md`](docs/00-audit-and-plan.md): audit, stack and phase plan
 - [`docs/01-phase-1-report.md`](docs/01-phase-1-report.md): what Phase 1 delivered, and how it was tested
+- [`docs/02-completion-report.md`](docs/02-completion-report.md): what was built across all six phases, test results, risks and the launch checklist
+- [`docs/RUNBOOK.md`](docs/RUNBOOK.md): daily checks, incidents, backups, secret rotation, deletion requests
 - [`docs/SETUP-CHECKLIST.md`](docs/SETUP-CHECKLIST.md): every value we still need (`[[CONFIRM]]` / `[[ENV]]`)
 
 ## Stack
