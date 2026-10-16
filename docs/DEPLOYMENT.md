@@ -25,6 +25,14 @@ npx supabase db push
 
 Then create the first administrator (see README → Bootstrapping).
 
+## Without a direct database connection
+Some environments (like the cloud session used to build this) can reach `api.supabase.com` over HTTPS but cannot open a Postgres connection, so `supabase db push` fails. `scripts/apply-hosted-migrations.py` applies the same migrations through the Management API, one transaction per migration, and records each in `supabase_migrations.schema_migrations` so the CLI stays in sync:
+
+```
+SUPABASE_ACCESS_TOKEN=... python3 scripts/apply-hosted-migrations.py bsiyaddxphdsenwqybro --dry-run
+SUPABASE_ACCESS_TOKEN=... python3 scripts/apply-hosted-migrations.py bsiyaddxphdsenwqybro
+```
+
 ## Do NOT run `supabase config push`
 
 `supabase/config.toml` is for **local development only**. It contains fixed test sign-in codes
