@@ -39,7 +39,11 @@ jobs:
             echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=$ANON_KEY"
             echo "SUPABASE_SERVICE_ROLE_KEY=$SERVICE_ROLE_KEY"
             echo "NEXT_PUBLIC_SITE_URL=http://localhost:3100"
+            echo "PAYMENTS_TEST_MODE=enabled"
+            echo "PAYMENTS_TEST_WEBHOOK_SECRET=ci-$(openssl rand -hex 16)"
           } > .env.local
+      - name: Seed synthetic data (tests that depend on it)
+        run: npm run db:seed-dev
       - name: Database access-control tests (pgTAP)
         run: npm run test:db
       - run: npx playwright install --with-deps chromium

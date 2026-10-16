@@ -1,6 +1,8 @@
 import { expect, type Page } from "@playwright/test";
 
 export const PHONES = {
+  pharmacist: "0700000004",
+  pharmacyManager: "0700000005",
   newPatient: "0700000001",
   patient2: "0700000010",
   doctor: "0700000002",
@@ -20,6 +22,8 @@ export async function signIn(page: Page, phone: string, next?: string) {
       page.waitForResponse((r) => r.request().method() === "POST" && r.url().includes("/sign-in")),
       page.getByRole("button", { name: "Send code" }).click(),
     ]);
+    // …and for React to finish rendering the result.
+    await expect(page.getByRole("button", { name: "Sending code…" })).toHaveCount(0);
     if (await sent.isVisible()) break;
     // Supabase's per-number resend interval (correct behaviour): wait, then try again like a user would.
     await page.waitForTimeout(2000);

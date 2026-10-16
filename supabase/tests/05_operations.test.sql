@@ -13,7 +13,7 @@ select throws_ok($$select * from public.admin_list_areas()$$, '42501', null, 'pa
 select tests.reset_role();
 
 select tests.act_as(:'admin');
-select is((public.admin_overview() ->> 'areas_total')::int, 1, 'overview counts come from the database');
+select is((public.admin_overview() ->> 'areas_total')::int, (select count(*)::int from public.service_coverage_areas), 'overview counts come from the database');
 
 -- Boundaries
 select throws_ok(

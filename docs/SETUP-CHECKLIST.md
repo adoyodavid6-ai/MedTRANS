@@ -5,6 +5,7 @@ Nothing below is guessed in code. Each value appears in the app as an explicit t
 ## Decided
 - [x] Stack: Next.js + Supabase (approved 2026-10-16)
 - [x] Pilot market: Nairobi, Kenya (approved 2026-10-16)
+- [x] Hosted Supabase project: `bsiyaddxphdsenwqybro` (provided 2026-10-17). Not yet linked: see docs/DEPLOYMENT.md
 
 ## Needed to deploy Phase 1
 - [ ] `[[CONFIRM: hosting — Vercel or other]]`
@@ -35,7 +36,17 @@ Nothing below is guessed in code. Each value appears in the app as an explicit t
 - [ ] `[[CONFIRM: Nairobi pilot service boundary (GeoJSON MultiPolygon)]]`. Pasted in Operations → Countries & coverage; the area cannot be activated without it.
 - [ ] `[[CONFIRM: PPB / KMPDC / NCK / ODPC review reference]]`. Kenya cannot be activated without a recorded review reference.
 
-## Pharmacy (Module A)
+## Pharmacy (Module A): built in Phase 2, needs these to go live
+- [ ] `[[CONFIRM: service fee]]`: set `pharmacy.service_fee_minor` in Operations → Settings (ordering is blocked until set)
+- [ ] `[[CONFIRM: VAT treatment]]`: per product in Operations → Catalogue (a product can't be ordered until its VAT rate is set); also whether shelf prices include VAT and whether VAT applies to delivery/service fees
+- [ ] `[[CONFIRM: delivery fee model]]`: currently a flat fee per pharmacy
+- [ ] `[[CONFIRM: approved product information source]]`: product pages show "not added yet" until approved text and its source are recorded
+- [ ] `[[CONFIRM: structured verified hours]]`
+- [ ] M-Pesa: `[[ENV: MPESA_CONSUMER_KEY]]`, `[[ENV: MPESA_CONSUMER_SECRET]]`, `[[ENV: MPESA_SHORTCODE]]`, `[[ENV: MPESA_PASSKEY]]`, `[[ENV: MPESA_CALLBACK_BASE_URL]]`, `[[ENV: MPESA_CALLBACK_TOKEN]]`, `MPESA_ENV=sandbox|production`. **The adapter has not yet been run against the Daraja sandbox.**
+- [ ] `[[ENV: SUPABASE_SERVICE_ROLE_KEY]]` on the server: payment callbacks need it
+- [ ] `[[CONFIRM: mapping provider]]`: courier "Open map" links currently go to OpenStreetMap
+- [ ] Never set `PAYMENTS_TEST_MODE` in production
+
 - [ ] `[[CONFIRM: partner pharmacies + PPB licence numbers and verification procedure]]`
 - [ ] `[[CONFIRM: controlled/restricted medicine list per jurisdiction]]`
 - [ ] `[[CONFIRM: prescription validity rules (days) per jurisdiction]]`

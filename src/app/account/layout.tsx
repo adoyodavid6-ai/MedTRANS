@@ -6,6 +6,8 @@ export const metadata: Metadata = { title: "My account", robots: { index: false,
 
 const NAV = [
   { href: "/account", label: "Overview" },
+  { href: "/account/orders", label: "Orders" },
+  { href: "/account/prescriptions", label: "Prescriptions" },
   { href: "/account/profile", label: "Profile" },
   { href: "/account/addresses", label: "Addresses" },
   { href: "/account/household", label: "Household" },

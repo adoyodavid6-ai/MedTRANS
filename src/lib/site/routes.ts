@@ -31,12 +31,12 @@ export const PUBLIC_ROUTES = [
   { href: "/legal/cancellation-and-refunds", title: "Cancellation and refunds", description: "How cancellations and refunds work.", status: "live", phase: 1, module: "legal" },
   { href: "/legal/healthcare-disclaimer", title: "Healthcare disclaimer", description: "What MedTRANS is, and is not.", status: "live", phase: 1, module: "legal" },
 
-  { href: "/pharmacy", title: "MedTRANS Pharmacy", description: "Medicines from verified, licensed pharmacies, delivered.", status: "planned", phase: 2, module: "pharmacy" },
-  { href: "/pharmacy/medicines", title: "Find a medicine", description: "Search medicines from verified pharmacies.", status: "planned", phase: 2, module: "pharmacy" },
-  { href: "/pharmacies", title: "Find a pharmacy", description: "Verified, licensed pharmacies near you.", status: "planned", phase: 2, module: "pharmacy" },
-  { href: "/cart", title: "Your cart", description: "Review your medicines before checkout.", status: "planned", phase: 2, module: "pharmacy", noindex: true },
-  { href: "/checkout", title: "Checkout", description: "Confirm your order and pay securely.", status: "planned", phase: 2, module: "pharmacy", noindex: true },
-  { href: "/orders/track", title: "Track an order", description: "Follow your order from pharmacy to door.", status: "planned", phase: 2, module: "pharmacy", noindex: true },
+  { href: "/pharmacy", title: "MedTRANS Pharmacy", description: "Medicines from verified, licensed pharmacies, delivered.", status: "live", phase: 2, module: "pharmacy" },
+  { href: "/pharmacy/medicines", title: "Find a medicine", description: "Search medicines from verified pharmacies.", status: "live", phase: 2, module: "pharmacy" },
+  { href: "/pharmacies", title: "Find a pharmacy", description: "Verified, licensed pharmacies near you.", status: "live", phase: 2, module: "pharmacy" },
+  { href: "/cart", title: "Your cart", description: "Review your medicines before checkout.", status: "live", phase: 2, module: "pharmacy", noindex: true },
+  { href: "/checkout", title: "Checkout", description: "Confirm your order and pay securely.", status: "live", phase: 2, module: "pharmacy", noindex: true },
+  { href: "/orders/track", title: "Track an order", description: "Follow your order from pharmacy to door.", status: "live", phase: 2, module: "pharmacy", noindex: true },
 
   { href: "/doctorcare", title: "DoctorCare", description: "Qualified doctors and nurses for eligible home visits.", status: "planned", phase: 3, module: "doctorcare" },
   { href: "/doctorcare/services", title: "Home-care services", description: "The home-care services MedTRANS offers.", status: "planned", phase: 3, module: "doctorcare" },

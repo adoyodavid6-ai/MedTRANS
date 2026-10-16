@@ -1,13 +1,11 @@
 import Link from "next/link";
-import { CalendarClock, FileText, Package, Receipt, Bell, LifeBuoy } from "lucide-react";
+import { CalendarClock, Receipt, Bell, LifeBuoy } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { requireAccount } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
 const UPCOMING = [
-  { icon: Package, title: "Orders", body: "Your medicine orders and delivery tracking will appear here when MedTRANS Pharmacy opens." },
-  { icon: FileText, title: "Prescriptions", body: "Prescriptions you upload, and the pharmacist's decision on each, will appear here." },
   { icon: CalendarClock, title: "Bookings & visit summaries", body: "Home-visit requests, their status, and visit summaries will appear here when DoctorCare opens." },
   { icon: Receipt, title: "Payments", body: "Receipts and refund status will appear here." },
   { icon: Bell, title: "Notifications", body: "Updates about your orders and visits will appear here." },

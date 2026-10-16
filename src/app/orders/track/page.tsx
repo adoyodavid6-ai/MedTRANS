@@ -1,7 +1,6 @@
-import { NotYetActivated, plannedMetadata } from "@/components/not-yet-activated";
+import { redirect } from "next/navigation";
 
-export const metadata = plannedMetadata("/orders/track");
-
-export default function Page() {
-  return <NotYetActivated href="/orders/track" />;
+// Order tracking lives in the signed-in account, so only the patient can see their orders.
+export default function TrackPage() {
+  redirect("/account/orders");
 }

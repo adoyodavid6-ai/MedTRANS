@@ -20,6 +20,9 @@ const nextConfig: NextConfig = {
   experimental: {
     // Enables forbidden() / unauthorized() for role-guarded pages and actions.
     authInterrupts: true,
+    // Prescription uploads are up to 10 MB (images or PDF), plus multipart overhead.
+    serverActions: { bodySizeLimit: "11mb" },
+    proxyClientMaxBodySize: "11mb",
   },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];

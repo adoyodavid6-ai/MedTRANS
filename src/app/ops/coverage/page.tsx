@@ -46,9 +46,9 @@ export default async function CoveragePage() {
         <h2 id="areas-heading" className="text-xl font-semibold">Coverage areas</h2>
         {error ? <Alert tone="warning" title="Couldn't load areas." /> : null}
         {((areas ?? []) as Area[]).map((a) => (
-          <Card key={a.id} className="space-y-4">
+          <Card key={a.id} className="space-y-4" role="region" aria-labelledby={`area-${a.id}`}>
             <div className="flex flex-wrap items-center gap-2">
-              <p className="font-semibold text-navy">{a.name}</p>
+              <p id={`area-${a.id}`} className="font-semibold text-navy">{a.name}</p>
               <Badge>{a.country_code}</Badge>
               {a.is_active ? <Badge tone="success">Active</Badge> : <Badge>Inactive</Badge>}
               {a.boundary_geojson ? <Badge tone="primary">Boundary set</Badge> : <Badge tone="warning">No boundary</Badge>}

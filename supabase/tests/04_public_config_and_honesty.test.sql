@@ -3,6 +3,10 @@ select plan(13);
 
 select tests.create_user('admin2@example.test') as admin \gset
 select tests.make_admin(:'admin');
+-- Independent of any dev seed: start from "nothing active" inside this rolled-back transaction.
+update public.countries set is_active = false, regulatory_review_ref = null, regulatory_reviewed_at = null;
+update public.service_coverage_areas set is_active = false;
+update public.emergency_contacts set is_active = false;
 
 -- Anonymous visitors
 select tests.act_as_anon();

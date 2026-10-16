@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { PUBLIC_ROUTES } from "../../src/lib/site/routes";
 
 test("the three core actions are visible without scrolling", async ({ page }) => {
   await page.goto("/");
@@ -23,7 +24,9 @@ test("every main nav item reaches a real page", async ({ page }) => {
 });
 
 test("planned services say plainly that they are not yet activated", async ({ page }) => {
-  await page.goto("/pharmacy");
+  const planned = PUBLIC_ROUTES.find((r) => r.status === "planned");
+  test.skip(!planned, "every route is live");
+  await page.goto(planned!.href);
   await expect(page.getByText("Not yet activated")).toBeVisible();
   await expect(page.getByText("This service is not available yet")).toBeVisible();
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);

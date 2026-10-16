@@ -57,7 +57,7 @@ test("an admin sees live metrics, can manage roles, and every change is audited"
 test("an admin cannot activate a coverage area that has no boundary", async ({ page }) => {
   await signIn(page, PHONES.admin);
   await page.goto("/ops/coverage");
-  const form = page.locator("form").filter({ has: page.getByRole("button", { name: "Activate area" }) });
+  const form = page.getByRole("region", { name: "Nairobi (pilot)" }).locator("form").filter({ has: page.getByRole("button", { name: "Activate area" }) });
   await form.getByRole("checkbox", { name: "I confirm this change" }).check();
   await form.getByRole("button", { name: "Activate area" }).click();
   await expect(page.getByText("An area needs a boundary before it can be activated.")).toBeVisible();

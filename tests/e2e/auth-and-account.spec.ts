@@ -68,7 +68,7 @@ test("another patient cannot see the first patient's data", async ({ page }) => 
   await signIn(page, PHONES.patient2);
   await expect(page).toHaveURL(/\/account$/);
   await page.goto("/account/addresses");
-  await expect(page.getByText("No saved addresses yet")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Saved addresses" })).toBeVisible();
   await expect(page.getByText("E2E Private Lane 42")).toHaveCount(0);
   await page.goto("/account/household");
   await expect(page.getByText("Child E2E")).toHaveCount(0);
