@@ -3,12 +3,18 @@ import { PHONES, signIn } from "./helpers";
 
 test.describe.configure({ mode: "serial" });
 
-test("a doctor lands in the clinician portal, shown honestly as not verified", async ({ page }) => {
+test("a doctor lands in the clinician portal, showing their real verification state", async ({ page }) => {
   await signIn(page, PHONES.doctor);
   await expect(page).toHaveURL(/\/portal\/care$/);
-  await expect(page.getByText("Not verified", { exact: true })).toBeVisible();
-  await expect(page.getByText("Not yet activated")).toBeVisible();
+  await expect(page.getByText("Verified", { exact: true })).toBeVisible();
   expect((await page.goto("/ops"))?.status()).toBe(403);
+  expect((await page.goto("/portal/pharmacy"))?.status()).toBe(403);
+});
+
+test("a nurse without a verified profile cannot reach the clinician tools' data", async ({ page }) => {
+  await signIn(page, PHONES.nurse);
+  await expect(page).toHaveURL(/\/portal\/care$/);
+  await expect(page.getByText("Set your base location and services to start receiving requests")).toBeVisible();
 });
 
 test("a courier has no access to clinical or pharmacy portals", async ({ page }) => {

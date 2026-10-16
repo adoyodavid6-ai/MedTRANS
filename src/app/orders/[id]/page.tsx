@@ -13,10 +13,11 @@ import { availableGateways } from "@/lib/payments";
 import { isTestGatewayEnabled } from "@/lib/payments/test-gateway";
 import { ORDER_FLOW, ORDER_STATUS } from "@/lib/pharmacy/status";
 import { createClient } from "@/lib/supabase/server";
-import { simulateTestPayment } from "./actions";
+import { startPayment } from "./actions";
 import { AutoRefresh } from "./auto-refresh";
 import { CancelForm } from "./cancel-form";
-import { PaymentPanel } from "./payment-panel";
+import { PaymentPanel } from "@/components/payments/payment-panel";
+import { TestPaymentControls } from "@/components/payments/test-payment-controls";
 
 export const metadata: Metadata = { title: "Your order", robots: { index: false, follow: false } };
 
@@ -78,15 +79,7 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
           {pendingPayment ? (
             <Alert tone="info" title="Waiting for payment confirmation">
               <p>We&apos;ll update this page as soon as the payment provider confirms. Don&apos;t pay twice.</p>
-              {pendingPayment.provider === "test" && isTestGatewayEnabled() ? (
-                <div className="mt-3 space-y-2 rounded-lg border border-dashed border-warning-ink/40 bg-warning-soft p-3">
-                  <p className="text-sm font-semibold text-warning-ink">Test gateway: no money moves. Choose what the provider reports.</p>
-                  <div className="flex flex-wrap gap-2">
-                    <form action={simulateTestPayment}><input type="hidden" name="payment_id" value={pendingPayment.id} /><input type="hidden" name="outcome" value="success" /><button className="min-h-11 rounded-xl bg-navy px-4 font-semibold text-white">Simulate successful payment</button></form>
-                    <form action={simulateTestPayment}><input type="hidden" name="payment_id" value={pendingPayment.id} /><input type="hidden" name="outcome" value="failure" /><button className="min-h-11 rounded-xl border border-line px-4 font-semibold">Simulate declined payment</button></form>
-                  </div>
-                </div>
-              ) : null}
+              {pendingPayment.provider === "test" && isTestGatewayEnabled() ? <TestPaymentControls paymentId={pendingPayment.id} /> : null}
             </Alert>
           ) : methods.length === 0 ? (
             <Alert tone="warning" title="Payments are not activated yet">
@@ -95,7 +88,7 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
           ) : (
             <>
               {lastFailed ? <Alert tone="warning" title="The last payment didn't go through"><p>{lastFailed.failure_reason ?? "Please try again."} You have not been charged.</p></Alert> : null}
-              <PaymentPanel orderId={o.id} idempotencyKey={randomUUID()} methods={methods} totalLabel={formatMoney(o.total_minor, cur)} />
+              <PaymentPanel action={startPayment} hidden={{ order_id: o.id }} idempotencyKey={randomUUID()} methods={methods} totalLabel={formatMoney(o.total_minor, cur)} />
             </>
           )}
         </Card>

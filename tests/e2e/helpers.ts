@@ -6,6 +6,7 @@ export const PHONES = {
   newPatient: "0700000001",
   patient2: "0700000010",
   doctor: "0700000002",
+  nurse: "0700000003",
   courier: "0700000006",
   support: "0700000007",
   admin: "0700000008",

@@ -73,6 +73,7 @@ async function main() {
     console.log(`+${acct.phone}  ${acct.name.padEnd(20)} ${acct.role ?? "patient"}`);
   }
   await seedPharmacy();
+  await seedDoctorCare();
   console.log("\nSign in at http://localhost:3000/sign-in with any number above and code 123456.");
 }
 
@@ -175,3 +176,35 @@ main().catch((e) => {
   console.error(e);
   process.exit(1);
 });
+
+/** SYNTHETIC DoctorCare setup for local development: service on, screening marked reviewed by "local seed", one doctor. */
+async function seedDoctorCare() {
+  const ops = await sessionFor("254700000008");
+  const area = await must(ops.from("service_coverage_areas").select("id").eq("slug", "local-test-area").single(), "area");
+  const has = (await ops.from("coverage_area_services").select("area_id").eq("area_id", area.id).eq("module", "doctorcare").maybeSingle()).data;
+  if (!has) await must(ops.from("coverage_area_services").insert({ area_id: area.id, module: "doctorcare", is_active: true, activated_at: new Date().toISOString() }), "dc module");
+
+  const fee = (await ops.from("platform_settings").select("key").eq("key", "doctorcare.booking_fee_minor").maybeSingle()).data;
+  if (!fee) await must(ops.from("platform_settings").insert({ key: "doctorcare.booking_fee_minor", value: 20000, is_public: true, description: "SYNTHETIC local value. [[CONFIRM: booking fee]]" }), "booking fee");
+
+  await must(ops.from("care_screening_questions").update({
+    clinically_reviewed_by: "SYNTHETIC LOCAL SEED: not a clinical review", clinically_reviewed_at: new Date().toISOString(),
+  }).eq("is_active", true).is("clinically_reviewed_at", null), "screening");
+  const svc = await must(ops.from("care_services").update({ is_active: true }).eq("slug", "gp-home-visit").select("id").single(), "service");
+
+  const doctorId = await userId("254700000002");
+  const doc = await sessionFor("254700000002");
+  const exists = (await doc.from("provider_profiles").select("user_id").eq("user_id", doctorId).maybeSingle()).data;
+  if (!exists) {
+    await must(doc.from("provider_profiles").insert({
+      user_id: doctorId, profession: "doctor", display_name: "Dr Test Doctor (synthetic)", regulator: "KMPDC", registration_number: "SYNTHETIC-DOC-01",
+      bio: "Synthetic profile for local testing.", languages: ["en", "sw"], years_experience: 8,
+      base_location: "SRID=4326;POINT(36.8000 -1.2900)", service_radius_m: 15000, travel_buffer_minutes: 30,
+    }), "doctor profile");
+    await must(doc.from("provider_services").insert({ provider_id: doctorId, service_id: svc.id, fee_minor: 250000 }), "doctor service");
+    await must(doc.from("provider_weekly_hours").insert([0, 1, 2, 3, 4, 5, 6].map((d) => ({ provider_id: doctorId, weekday: d, start_time: "07:00", end_time: "21:00" }))), "hours");
+    await must(ops.rpc("admin_set_provider_status", { p_provider: doctorId, p_status: "verified", p_check_method: "Synthetic local seed. Not a real registration check." }), "verify doctor");
+    await must(doc.from("provider_profiles").update({ accepts_bookings: true }).eq("user_id", doctorId), "accepts");
+  }
+  console.log("Synthetic DoctorCare setup ready (local only).");
+}

@@ -1,7 +1,6 @@
-import { NotYetActivated, plannedMetadata } from "@/components/not-yet-activated";
+import { redirect } from "next/navigation";
 
-export const metadata = plannedMetadata("/bookings/status");
-
-export default function Page() {
-  return <NotYetActivated href="/bookings/status" />;
+// Booking status lives in the signed-in account, so only the patient can see their bookings.
+export default function BookingStatus() {
+  redirect("/account/bookings");
 }

@@ -1,7 +1,6 @@
-import { NotYetActivated, plannedMetadata } from "@/components/not-yet-activated";
+import { redirect } from "next/navigation";
 
-export const metadata = plannedMetadata("/doctorcare/services");
-
-export default function Page() {
-  return <NotYetActivated href="/doctorcare/services" />;
+// Services are listed on the DoctorCare page.
+export default function ServicesIndex() {
+  redirect("/doctorcare#services-heading");
 }

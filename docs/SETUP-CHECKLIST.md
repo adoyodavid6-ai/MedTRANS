@@ -54,7 +54,15 @@ Nothing below is guessed in code. Each value appears in the app as an explicit t
 - [ ] `[[CONFIRM: is guest checkout lawful/desired?]]`
 - [ ] `[[CONFIRM: cash on delivery allowed?]]`
 
-## DoctorCare / SmartCare (Modules B, C)
+## DoctorCare / SmartCare (Modules B, C): built in Phase 3, needs these to go live
+- [ ] `[[CONFIRM: clinical review of screening questions]]`: a named clinician reviews the 9 draft red-flag questions (Operations → Home-care services). **Home-visit requests are blocked until this is recorded.**
+- [ ] `[[CONFIRM: clinical eligibility criteria]]` and `[[CONFIRM: clinical escalation protocol]]` for the GP home visit (and each further service)
+- [ ] `[[CONFIRM: booking fee]]`: set `doctorcare.booking_fee_minor` (requests are blocked until set)
+- [ ] `[[CONFIRM: match offer timeout]]`: `doctorcare.offer_timeout_minutes` (default 10)
+- [ ] `[[CONFIRM: commission and provider settlement terms]]`: the clinician portal shows gross completed-visit fees only
+- [ ] `[[CONFIRM: KMPDC / NCK registration check procedure]]` for verifying clinicians
+- [ ] `[[CONFIRM: routing provider]]` for travel-time ETAs: until then, distances are straight-line and labelled as such
+
 - [ ] `[[CONFIRM: launch service list, required qualifications per service, regulator (KMPDC / NCK) verification procedure]]`
 - [ ] `[[CONFIRM: visit fees, travel charges, cancellation windows]]`
 - [ ] `[[CONFIRM: match offer timeout and max retries]]`

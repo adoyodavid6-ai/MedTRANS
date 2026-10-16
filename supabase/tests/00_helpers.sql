@@ -104,3 +104,56 @@ end $$;
 
 grant execute on all functions in schema tests to anon, authenticated, service_role;
 grant usage on schema tests to service_role;
+
+-- DoctorCare fixtures: active area with DoctorCare on, a reviewed screening set, fees, one service.
+create or replace function tests.setup_doctorcare()
+returns uuid language plpgsql as $$
+declare
+  area uuid;
+  svc uuid;
+begin
+  perform tests.reset_role();
+  update public.countries set is_active = true, regulatory_review_ref = 'TEST', regulatory_reviewed_at = now() where code = 'KE';
+  select a.id into area from public.service_coverage_areas a where a.slug = 'test-area';
+  if area is null then
+    insert into public.service_coverage_areas (country_code, name, slug, boundary, is_active)
+    values ('KE', 'Test area', 'test-area', 'SRID=4326;MULTIPOLYGON(((36.7 -1.4,36.95 -1.4,36.95 -1.15,36.7 -1.15,36.7 -1.4)))', true)
+    returning id into area;
+  end if;
+  insert into public.coverage_area_services (area_id, module, is_active, activated_at) values (area, 'doctorcare', true, now())
+  on conflict (area_id, module) do update set is_active = true, activated_at = now();
+  delete from public.platform_settings where key in ('doctorcare.booking_fee_minor', 'doctorcare.offer_timeout_minutes');
+  insert into public.platform_settings (key, value, is_public) values ('doctorcare.booking_fee_minor', '20000', true), ('doctorcare.offer_timeout_minutes', '10', true);
+  update public.care_screening_questions set is_active = false;
+  insert into public.care_screening_questions (position, question, is_red_flag, clinically_reviewed_by, clinically_reviewed_at)
+  values (1, 'Is the person struggling to breathe?', true, 'TEST reviewer', now()), (2, 'Do they have chest pain?', true, 'TEST reviewer', now());
+  insert into public.care_services (slug, name, summary, required_profession, duration_minutes, is_active)
+  values ('test-gp-visit', 'Test GP visit', 'A synthetic GP home visit for tests.', 'doctor', 60, true) returning id into svc;
+  return svc;
+end $$;
+
+-- A verified doctor at a location, working every day 06:00-22:00, offering the service at a fee.
+create or replace function tests.make_doctor(admin_id uuid, uid uuid, svc uuid, lng float, lat float, fee int, langs text[] default '{en}')
+returns void language plpgsql as $$
+begin
+  perform tests.act_as(uid);
+  insert into public.provider_profiles (user_id, profession, display_name, regulator, registration_number, languages, base_location, service_radius_m, travel_buffer_minutes)
+  values (uid, 'doctor', 'Dr ' || left(uid::text, 4), 'KMPDC', 'TEST-' || left(uid::text, 6), langs,
+          extensions.st_setsrid(extensions.st_makepoint(lng, lat), 4326)::extensions.geography, 10000, 30);
+  insert into public.provider_services (provider_id, service_id, fee_minor) values (uid, svc, fee);
+  insert into public.provider_weekly_hours (provider_id, weekday, start_time, end_time) select uid, d, '06:00', '22:00' from generate_series(0, 6) d;
+  perform tests.reset_role();
+  perform tests.act_as(admin_id);
+  perform public.admin_set_provider_status(uid, 'verified', 'synthetic test check');
+  perform tests.reset_role();
+  perform tests.act_as(uid);
+  update public.provider_profiles set accepts_bookings = true where user_id = uid;
+  perform tests.reset_role();
+end $$;
+
+create or replace function tests.tomorrow_at(hhmm text)
+returns timestamptz language sql as $$
+  select (((now() at time zone 'Africa/Nairobi')::date + 1) + hhmm::time) at time zone 'Africa/Nairobi';
+$$;
+
+grant execute on all functions in schema tests to anon, authenticated, service_role;

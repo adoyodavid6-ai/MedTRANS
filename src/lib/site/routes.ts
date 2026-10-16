@@ -38,15 +38,15 @@ export const PUBLIC_ROUTES = [
   { href: "/checkout", title: "Checkout", description: "Confirm your order and pay securely.", status: "live", phase: 2, module: "pharmacy", noindex: true },
   { href: "/orders/track", title: "Track an order", description: "Follow your order from pharmacy to door.", status: "live", phase: 2, module: "pharmacy", noindex: true },
 
-  { href: "/doctorcare", title: "DoctorCare", description: "Qualified doctors and nurses for eligible home visits.", status: "planned", phase: 3, module: "doctorcare" },
-  { href: "/doctorcare/services", title: "Home-care services", description: "The home-care services MedTRANS offers.", status: "planned", phase: 3, module: "doctorcare" },
-  { href: "/find-a-doctor", title: "Find a doctor", description: "Verified doctors and nurses who visit at home.", status: "planned", phase: 3, module: "doctorcare" },
-  { href: "/doctorcare/book", title: "Request a home visit", description: "Book a qualified professional to visit you.", status: "planned", phase: 3, module: "doctorcare", noindex: true },
-  { href: "/bookings/status", title: "Booking status", description: "Follow your home-visit request.", status: "planned", phase: 3, module: "doctorcare", noindex: true },
-  { href: "/smartcare/map", title: "SmartCare map", description: "Suitable, available care near you, on a map and as a list.", status: "planned", phase: 3, module: "smartcare" },
+  { href: "/doctorcare", title: "DoctorCare", description: "Qualified doctors and nurses for eligible home visits.", status: "live", phase: 3, module: "doctorcare" },
+  { href: "/doctorcare/services", title: "Home-care services", description: "The home-care services MedTRANS offers.", status: "live", phase: 3, module: "doctorcare" },
+  { href: "/find-a-doctor", title: "Find a doctor", description: "Verified doctors and nurses who visit at home.", status: "live", phase: 3, module: "doctorcare" },
+  { href: "/doctorcare/book", title: "Request a home visit", description: "Book a qualified professional to visit you.", status: "live", phase: 3, module: "doctorcare", noindex: true },
+  { href: "/bookings/status", title: "Booking status", description: "Follow your home-visit request.", status: "live", phase: 3, module: "doctorcare", noindex: true },
+  { href: "/smartcare/map", title: "SmartCare map", description: "Suitable, available care near you, on a map and as a list.", status: "live", phase: 3, module: "smartcare" },
 
   { href: "/resources", title: "Health resources", description: "Professionally reviewed health information.", status: "planned", phase: 5, module: "company" },
-  { href: "/join/provider", title: "Join as a doctor or nurse", description: "Register to provide home visits through MedTRANS.", status: "planned", phase: 3, module: "partners" },
+  { href: "/join/provider", title: "Join as a doctor or nurse", description: "Register to provide home visits through MedTRANS.", status: "live", phase: 3, module: "partners" },
   { href: "/join/pharmacy", title: "Register your pharmacy", description: "List your licensed pharmacy on MedTRANS.", status: "planned", phase: 2, module: "partners" },
   { href: "/partnerships", title: "Partnerships", description: "Work with MedTRANS as an organisation or institution.", status: "planned", phase: 5, module: "partners" },
 ] as const satisfies readonly PublicRoute[];
