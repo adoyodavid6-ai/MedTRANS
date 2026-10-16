@@ -3,9 +3,10 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { MAIN_NAV } from "@/lib/site/routes";
+import { NAV_GROUPS } from "@/lib/site/routes";
 import { AccountLinks } from "./account-links";
 import { LocationSelector } from "./location-selector";
+import { SiteSearch } from "./site-search";
 
 export function MobileMenu() {
   const ref = useRef<HTMLDialogElement>(null);
@@ -34,22 +35,28 @@ export function MobileMenu() {
             <span className="sr-only">Close menu</span>
           </button>
         </div>
-        <div className="space-y-5 p-4">
+        <div className="space-y-5 overflow-y-auto p-4">
           <LocationSelector className="w-full max-w-none" />
-          <nav aria-label="Main">
-            <ul className="space-y-1">
-              {MAIN_NAV.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={close}
-                    className="flex min-h-12 items-center rounded-xl px-3 font-medium text-navy hover:bg-primary-soft"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <SiteSearch id="mobile-search" />
+          <nav aria-label="Main" className="space-y-4">
+            {NAV_GROUPS.map((group) => (
+              <section key={group.label} aria-labelledby={`m-${group.label}`}>
+                <h2 id={`m-${group.label}`} className="px-3 pb-1 text-xs font-bold tracking-[0.08em] text-muted uppercase">{group.label}</h2>
+                <ul>
+                  {group.links.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={close}
+                        className="flex min-h-11 items-center rounded-xl px-3 font-medium text-navy hover:bg-primary-soft"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
           </nav>
           <div onClick={close}>
             <AccountLinks stacked />
