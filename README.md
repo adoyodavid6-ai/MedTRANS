@@ -51,7 +51,13 @@ npm run test:e2e    # end-to-end + WCAG checks (Playwright; builds and starts th
 
 ## Bootstrapping the first administrator (production)
 
-Administrators can only be granted by another administrator. For the very first one, run this once in the Supabase SQL editor after that person has signed in:
+Administrators can only be granted by another administrator. For the very first one, either register their number *before* they sign in (they become admin on first sign-in, only while no admin exists; the grant is audited):
+
+```sql
+insert into public.admin_bootstrap (phone) values ('2547XXXXXXXX');  -- their number, without +
+```
+
+or run this once in the Supabase SQL editor after that person has signed in:
 
 ```sql
 insert into public.user_roles (user_id, role)
