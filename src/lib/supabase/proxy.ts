@@ -1,6 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { isSupabaseConfigured } from "@/lib/env";
+import { isSupabaseConfigured, supabasePublicKey } from "@/lib/env";
 
 /**
  * Refreshes the Supabase session cookie on each request.
@@ -13,7 +13,7 @@ export async function updateSession(request: NextRequest) {
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabasePublicKey()!,
     {
       cookies: {
         getAll() {
