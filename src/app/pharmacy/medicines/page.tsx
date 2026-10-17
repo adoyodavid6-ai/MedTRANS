@@ -31,7 +31,7 @@ export default async function MedicinesPage({ searchParams }: { searchParams: Pr
   return (
     <div className="container-page py-8 sm:py-10">
       {q ? <TrackView event="pharmacy_search" path="/pharmacy/medicines" /> : null}
-      <h1 className="text-3xl font-bold">Find a medicine</h1>
+      <h1 className="text-3xl font-medium">Find a medicine</h1>
       <form role="search" className="mt-4 flex max-w-xl gap-2">
         <label htmlFor="q" className="sr-only">Search medicines</label>
         <Input id="q" name="q" defaultValue={q} placeholder="Name, generic name or brand" />

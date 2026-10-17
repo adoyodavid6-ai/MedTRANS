@@ -23,7 +23,7 @@ export default async function CartPage() {
   if (quote.empty) {
     return (
       <div className="container-page max-w-3xl py-10">
-        <h1 className="text-3xl font-bold">Your cart</h1>
+        <h1 className="text-3xl font-medium">Your cart</h1>
         <div className="mt-6">
           <EmptyState icon={ShoppingCart} title="Your cart is empty" action={<ButtonLink href="/pharmacy/medicines">Find a medicine</ButtonLink>} />
         </div>
@@ -40,7 +40,7 @@ export default async function CartPage() {
   return (
     <div className="container-page max-w-3xl space-y-6 py-10">
       <div>
-        <h1 className="text-3xl font-bold">Your cart</h1>
+        <h1 className="text-3xl font-medium">Your cart</h1>
         <p className="mt-1 text-muted">From <Link href={`/pharmacies/${quote.pharmacy!.slug}`} className="font-semibold text-navy underline">{quote.pharmacy!.name}</Link></p>
       </div>
 

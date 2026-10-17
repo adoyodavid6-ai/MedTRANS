@@ -63,7 +63,7 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
       {live ? <AutoRefresh seconds={pendingPayment ? 4 : 15} /> : null}
       <div>
         <p className="text-sm text-muted"><Link href="/account/orders" className="underline">Your orders</Link></p>
-        <h1 className="mt-1 text-3xl font-bold">Order {o.order_number}</h1>
+        <h1 className="mt-1 text-3xl font-medium">Order {o.order_number}</h1>
         <p className="mt-1 text-muted">From {o.pharmacies.name} · placed {fmt(o.created_at)}</p>
       </div>
 

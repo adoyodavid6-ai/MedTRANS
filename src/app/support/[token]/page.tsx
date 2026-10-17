@@ -25,7 +25,7 @@ export default async function GuestTicket({ params, searchParams }: { params: Pr
           <p>Keep this page&apos;s link private; it lets you see our reply and respond. We&apos;ll also contact you by your chosen method.</p>
         </Alert>
       ) : null}
-      <h1 className="text-2xl font-bold">{t.subject}</h1>
+      <h1 className="text-2xl font-medium">{t.subject}</h1>
       <p className="flex flex-wrap items-center gap-2 text-muted">{t.ticket_number} <Badge tone={s.tone}>{s.label}</Badge></p>
       <Messages messages={t.messages} />
       {t.status !== "closed" ? <Card><CustomerReplyForm ticketId={t.id} token={token} /></Card> : null}

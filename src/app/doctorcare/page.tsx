@@ -35,7 +35,7 @@ export default async function DoctorCarePage() {
           <p>Visits are only offered where DoctorCare is switched on, by professionals who are verified, qualified for the service, and genuinely free at the time you choose. If nobody suitable is available, we&apos;ll tell you plainly. You are never charged unless a professional accepts.</p>
         </Alert>
         <section aria-labelledby="services-heading">
-          <h2 id="services-heading" className="text-2xl font-bold">Services</h2>
+          <h2 id="services-heading" className="text-2xl font-medium">Services</h2>
           {services.length === 0 ? <p className="mt-2 text-muted">No home-visit services are switched on yet.</p> : (
             <div className="mt-4 grid gap-4 md:grid-cols-2">
               {services.map((s) => (
@@ -50,7 +50,7 @@ export default async function DoctorCarePage() {
           )}
         </section>
         <section aria-labelledby="how-heading">
-          <h2 id="how-heading" className="text-2xl font-bold">How it works</h2>
+          <h2 id="how-heading" className="text-2xl font-medium">How it works</h2>
           <ol className="mt-3 list-decimal space-y-1.5 pl-5 text-[0.95rem]">
             <li>Choose the service and who it&apos;s for, and confirm where you are.</li>
             <li>Answer a few safety questions. If anything suggests an emergency, we&apos;ll direct you to emergency help instead.</li>

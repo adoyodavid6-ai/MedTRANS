@@ -24,7 +24,7 @@ export default async function ProviderPage({ params }: { params: Promise<{ id: s
   return (
     <div className="container-page max-w-3xl space-y-6 py-10">
       <JsonLd data={{ "@context": "https://schema.org", "@type": p.profession === "doctor" ? "Physician" : "Person", name: p.display_name, url: `${siteUrl}/providers/${p.provider_id}`, ...(p.profession === "doctor" ? {} : { jobTitle: "Nurse" }) }} />
-      <h1 className="text-3xl font-bold">{p.display_name}</h1>
+      <h1 className="text-3xl font-medium">{p.display_name}</h1>
       <ProviderCard p={p} />
       {p.bio ? <p className="text-[0.95rem]">{p.bio}</p> : null}
       <p className="text-sm text-muted">Registration checked by MedTRANS on {new Intl.DateTimeFormat("en-GB", { dateStyle: "medium" }).format(new Date(p.verified_at))}.</p>

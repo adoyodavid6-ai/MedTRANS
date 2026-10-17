@@ -40,7 +40,7 @@ export default async function EmergencyPage() {
             <Siren aria-hidden className="size-5" />
             Emergency Help
           </p>
-          <h1 className="text-[1.75rem] font-bold text-[#7a1717] sm:text-4xl">
+          <h1 className="text-[1.75rem] font-medium text-[#7a1717] sm:text-4xl">
             If someone&apos;s life may be at risk, contact local emergency services now.
           </h1>
           <p className="text-lg">

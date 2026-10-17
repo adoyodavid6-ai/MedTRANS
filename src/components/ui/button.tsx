@@ -6,15 +6,15 @@ type Variant = "primary" | "secondary" | "ghost" | "urgent" | "navy";
 type Size = "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-colors " +
+  "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors " +
   "disabled:cursor-not-allowed disabled:opacity-60 min-h-11 text-center whitespace-nowrap";
 
 const variants: Record<Variant, string> = {
   primary: "bg-primary text-white hover:bg-primary-hover",
-  secondary: "bg-surface text-navy border border-line hover:border-primary hover:text-primary",
+  secondary: "bg-surface text-navy border border-line hover:border-navy",
   ghost: "text-navy hover:bg-primary-soft",
   urgent: "bg-urgent text-white hover:bg-urgent-hover",
-  navy: "bg-navy text-white hover:bg-[#0f2436]",
+  navy: "bg-nav text-white hover:bg-black",
 };
 
 const sizes: Record<Size, string> = {

@@ -60,7 +60,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <Pill className="size-9" />
         </div>
         <div className="min-w-0 flex-1">
-          <h1 className="text-3xl font-bold">{m.name}</h1>
+          <h1 className="text-3xl font-medium">{m.name}</h1>
           <div className="mt-2"><RxBadge rx={m.requires_prescription} controlled={m.is_controlled} /></div>
           <dl className="mt-4 grid gap-x-6 gap-y-1 text-[0.95rem] sm:grid-cols-2">
             <div><dt className="inline text-muted">Generic name: </dt><dd className="inline">{m.generic_name}</dd></div>

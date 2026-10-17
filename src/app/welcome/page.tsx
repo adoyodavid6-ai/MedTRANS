@@ -15,7 +15,7 @@ export default async function WelcomePage({ searchParams }: { searchParams: Prom
 
   return (
     <div className="container-page max-w-md py-10 sm:py-16">
-      <h1 className="text-3xl font-bold">Welcome to MedTRANS</h1>
+      <h1 className="text-3xl font-medium">Welcome to MedTRANS</h1>
       <p className="mt-2 text-muted">A couple of things before you start.</p>
       <Card className="mt-6">
         <WelcomeForm next={next} />

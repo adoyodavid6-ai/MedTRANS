@@ -17,7 +17,7 @@ export function MobileMenu() {
       <button
         type="button"
         onClick={() => ref.current?.showModal()}
-        className="inline-flex size-11 items-center justify-center rounded-xl border border-line bg-surface text-navy"
+        className="inline-flex size-11 items-center justify-center rounded-md text-white hover:bg-white/10"
         aria-haspopup="dialog"
       >
         <Menu aria-hidden className="size-5" />
@@ -41,7 +41,7 @@ export function MobileMenu() {
           <nav aria-label="Main" className="space-y-4">
             {NAV_GROUPS.map((group) => (
               <section key={group.label} aria-labelledby={`m-${group.label}`}>
-                <h2 id={`m-${group.label}`} className="px-3 pb-1 text-xs font-bold tracking-[0.08em] text-muted uppercase">{group.label}</h2>
+                <h2 id={`m-${group.label}`} className="px-3 pb-1 text-xs font-medium tracking-[0.08em] text-muted uppercase">{group.label}</h2>
                 <ul>
                   {group.links.map((item) => (
                     <li key={item.href}>

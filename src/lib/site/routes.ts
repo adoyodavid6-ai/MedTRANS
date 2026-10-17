@@ -126,13 +126,6 @@ export const NAV_GROUPS: { label: string; links: { href: PublicHref; label: stri
   },
 ];
 
-/** Small links in the header's top bar. */
-export const UTILITY_NAV: { href: PublicHref; label: string }[] = [
-  { href: "/help", label: "Help Centre" },
-  { href: "/contact", label: "Contact" },
-  { href: "/partnerships", label: "Partners" },
-];
-
 export const FOOTER_NAV: { heading: string; links: { href: PublicHref; label: string }[] }[] = [
   {
     heading: "Care",

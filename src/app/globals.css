@@ -1,33 +1,37 @@
 @import "tailwindcss";
 
 /*
- * MedTRANS design tokens (masterplan §5).
- * Contrast (WCAG 2.2): primary on white 4.75:1, muted on background 4.68:1,
- * urgent on white 5.62:1, text on background 14:1. Never set primary text on mint (3.57:1).
+ * MedTRANS design tokens. Editorial style: warm cream, near-black type, sage green actions.
+ * Contrast (WCAG 2.2, checked): ink on background 13.9:1, muted on background 5.4:1,
+ * white on primary 5.5:1, primary text on background 5.1:1, accent text on background 5.6:1 (4.9:1 on sand),
+ * white on urgent 5.6:1, white on the dark nav 14.4:1.
  */
 @theme {
-  --color-primary: #087f8c;
-  --color-primary-hover: #066571;
-  --color-primary-soft: #e6f4f3;
-  --color-navy: #153047;
-  --color-background: #fafcfb;
-  --color-surface: #ffffff;
-  --color-mint: #bce9d8;
+  --color-primary: #55704a;
+  --color-primary-hover: #445c3b;
+  --color-primary-soft: #e8ede0;
+  --color-navy: #1f1f1d;
+  --color-background: #f7f5ef;
+  --color-surface: #fffdf9;
+  --color-mint: #dbe4cf;
+  --color-accent: #85592f;
+  --color-sand: #ede8dc;
   --color-urgent: #c62828;
   --color-urgent-hover: #a51f1f;
   --color-urgent-soft: #fdecec;
-  --color-ink: #202b33;
-  --color-muted: #647481;
-  --color-line: #dde5e3;
-  --color-nav: #e3e8e7;
+  --color-ink: #262624;
+  --color-muted: #66645d;
+  --color-line: #ddd8cc;
+  --color-nav: #2a2a28;
   --color-warning-soft: #fff6e0;
   --color-warning-ink: #6b4a00;
 
   --font-sans:
-    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif;
+    "Inter Tight Variable", "Inter Tight", "Helvetica Neue", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
 
-  --radius-card: 1rem;
-  --shadow-card: 0 1px 2px rgb(21 48 71 / 0.04), 0 4px 16px rgb(21 48 71 / 0.06);
+  --radius-card: 0.5rem;
+  --shadow-card: 0 1px 2px rgb(31 31 29 / 0.04);
 }
 
 @layer base {
@@ -48,8 +52,9 @@
   h2,
   h3 {
     color: var(--color-navy);
-    line-height: 1.2;
-    letter-spacing: -0.01em;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
     text-wrap: balance;
   }
 
@@ -77,9 +82,33 @@
 }
 
 @layer components {
+  /* Small monospaced uppercase label, e.g. section numbers and eyebrows. */
+  .label-mono {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Very large editorial headline. */
+  .display {
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 0.98;
+  }
+
+  /* Slow horizontal scroll for decorative text (stopped by the reduced-motion rule above). */
+  .marquee {
+    animation: marquee 18s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
   .container-page {
     width: 100%;
-    max-width: 72rem;
+    max-width: 80rem;
     margin-inline: auto;
     padding-inline: 1rem;
   }

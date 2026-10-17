@@ -20,7 +20,7 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
   const starting = mode === "start";
   return (
     <div className="container-page flex max-w-md flex-col py-10 sm:py-16">
-      <h1 className="text-3xl font-bold">{starting ? "Get started" : "Sign in"}</h1>
+      <h1 className="text-3xl font-medium">{starting ? "Get started" : "Sign in"}</h1>
       <p className="mt-2 text-muted">
         {starting ? "Create your MedTRANS account with your mobile number or email." : "Welcome back. Sign in with your mobile number or email."}
       </p>

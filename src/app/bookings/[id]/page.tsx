@@ -65,7 +65,7 @@ export default async function BookingPage({ params }: { params: Promise<{ id: st
       {live ? <AutoRefresh seconds={pendingPay || b.status === "awaiting_acceptance" ? 5 : 20} /> : null}
       <div>
         <p className="text-sm text-muted"><Link href="/account/bookings" className="underline">Your bookings</Link></p>
-        <h1 className="mt-1 text-3xl font-bold">{b.care_services.name}</h1>
+        <h1 className="mt-1 text-3xl font-medium">{b.care_services.name}</h1>
         <p className="mt-1 text-muted">Booking {b.booking_number} · for {b.patient_name}{b.status !== "escalated" ? ` · ${fmtSlot(slotStart(b.slot))}` : ""}</p>
       </div>
 

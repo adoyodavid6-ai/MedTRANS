@@ -44,7 +44,7 @@ export default async function CheckoutPage({ searchParams }: { searchParams: Pro
   return (
     <div className="container-page max-w-3xl space-y-6 py-10">
       <TrackView event="checkout_started" path="/checkout" />
-      <h1 className="text-3xl font-bold">Checkout</h1>
+      <h1 className="text-3xl font-medium">Checkout</h1>
 
       <Card className="space-y-3">
         <h2 className="text-xl font-semibold">Deliver to</h2>

@@ -12,7 +12,7 @@ import { cn } from "@/lib/cn";
  * Client-side so public pages stay static; this only affects which link shows.
  * Access to the account itself is checked on the server.
  */
-export function AccountLinks({ stacked = false }: { stacked?: boolean }) {
+export function AccountLinks({ stacked = false, variant = "default" }: { stacked?: boolean; variant?: "default" | "pill" }) {
   const configured = Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL);
   const [signedIn, setSignedIn] = useState<boolean | null>(configured ? null : false);
 
@@ -23,6 +23,18 @@ export function AccountLinks({ stacked = false }: { stacked?: boolean }) {
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => setSignedIn(Boolean(session)));
     return () => sub.subscription.unsubscribe();
   }, [configured]);
+
+  if (variant === "pill") {
+    return (
+      <Link
+        href={signedIn ? "/account" : "/sign-in"}
+        className="inline-flex h-11 items-center gap-1.5 rounded-md bg-black/35 px-3.5 text-sm font-medium text-white hover:bg-black/60"
+      >
+        <UserRound aria-hidden className="size-4" />
+        {signedIn ? "My account" : "Login"}
+      </Link>
+    );
+  }
 
   if (signedIn) {
     return (

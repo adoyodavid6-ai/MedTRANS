@@ -26,7 +26,7 @@ export default async function RequestStatus({ params }: { params: Promise<{ toke
       <Alert tone="urgent" title="If things get worse, call local emergency services now">
         <p><Link href="/emergency" className="font-semibold underline">Emergency Help</Link> shows what to do and verified numbers.</p>
       </Alert>
-      <h1 className="text-2xl font-bold">Request {r.reference}</h1>
+      <h1 className="text-2xl font-medium">Request {r.reference}</h1>
       <Card aria-live="polite">
         <Badge tone={s.tone}>{s.label}</Badge>
         <p className="mt-2 text-[0.95rem]">{s.explanation}</p>

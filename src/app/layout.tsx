@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { JsonLd } from "@/components/seo/json-ld";
 import { siteUrl } from "@/lib/env";
 import { site } from "@/lib/site/config";
+import "@fontsource-variable/inter-tight";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#087F8C",
+  themeColor: "#2A2A28",
   width: "device-width",
   initialScale: 1,
 };
